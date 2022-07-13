@@ -1,0 +1,13 @@
+.scrolly {
+    overflow: auto;
+    overflow-y: hidden;
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+.scrollTwo {
+    overflow-x: scroll;
+    width: 300px;
+    display: block;
+    height: 40px;
+}
