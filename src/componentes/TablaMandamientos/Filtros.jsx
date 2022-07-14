@@ -9,15 +9,12 @@ import Divider from '@mui/material/Divider'
 import useFetchData from '../../hooks/useFetchData'
 
 function Filtros({ mandamientosDatos }) {
-    const [busqueda, setBusqueda] = useState({
-        unidad: '', estatus: '', region: ''
-    })
+    const [busqueda, setBusqueda] = useState({ unidad: '', estatus: '', region: '' })
     const [catalogos, setCatalogos] = useFetchData('catalogos/mandamientos_filtros')
 
     const handleChange = (event) => {
-        //setAge(event.target.value)
-        setBusqueda(event.target.value)
-        console.log(event.target.value)
+        const defaultValues = { unidad: '', estatus: '', region: '' }
+        setBusqueda({ ...defaultValues, [event.target.name] : event.target.value })
     }
 
     if (catalogos == null) return
@@ -27,9 +24,9 @@ function Filtros({ mandamientosDatos }) {
             <Grid container>
                 <Grid item xs={3}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="unidad_label">Unidad</InputLabel>
-                        <Select id="unidad_select" labelId='unidad_label' value={busqueda} onChange={handleChange}>
-                            <MenuItem defaultValue=""><em>None</em></MenuItem>
+                        <InputLabel>Unidad</InputLabel>
+                        <Select value={busqueda.unidad} onChange={handleChange} name="unidad">
+                            <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
                             {catalogos.catUnidades.map(unidad => <MenuItem key={unidad.id} value={unidad.nombre}>{unidad.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
@@ -37,8 +34,8 @@ function Filtros({ mandamientosDatos }) {
                 <Grid item xs={3}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Estatus</InputLabel>
-                        <Select value={busqueda} onChange={handleChange}>
-                            <MenuItem value=""><em>None</em></MenuItem>
+                        <Select value={busqueda.estatus} onChange={handleChange} name="estatus">
+                            <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
                             {catalogos.catEstatus.map(estatus => <MenuItem key={estatus.id} value={estatus.nombre}>{estatus.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
@@ -46,8 +43,8 @@ function Filtros({ mandamientosDatos }) {
                 <Grid item xs={3}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Region</InputLabel>
-                        <Select value={busqueda} onChange={handleChange}>
-                            <MenuItem value=""><em>None</em></MenuItem>
+                        <Select value={busqueda.region} onChange={handleChange} name="region">
+                            <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
                             {catalogos.catRegiones.map(region => <MenuItem key={region.id} value={region.nombre}>{region.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
