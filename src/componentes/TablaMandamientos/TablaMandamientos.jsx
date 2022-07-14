@@ -10,10 +10,6 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
-
 import './TablaMandamientos.css'
 
 import { useSelector } from 'react-redux'
@@ -22,6 +18,7 @@ import TablaAccionesPaginacion from "./TablaAccionesPaginacion"
 import Fila from "./Fila"
 import Detalle from "../Detalle/Detalle"
 import Paginas from './Paginas'
+import Filtros from './Filtros'
 
 import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
@@ -36,17 +33,12 @@ function TablaMandamientos() {
     const [pagina, setPagina] = React.useState(0)
     const [numeroDeFilasPorPagina, setNumeroDeFilasPorPagina] = React.useState(5)
     const [mandamientos, setMandamientos] = useFetchData("mandamientos")
-    const [selectsUnidad, setSelectsUnidad] = useState(null)
 
     React.useEffect(() => {
         if (mandamientos == null) return
         setCantidadPaginas(mandamientos.last_page)
         setNumeroRegistros(mandamientos.total)
         setFilasVacias(pagina > 0 ? Math.max(0, (1 + pagina) * numeroDeFilasPorPagina - mandamientos.data.length) : 0)
-
-        //console.log(mandamientos.data)
-        const newSelectsUnidad = new Set(mandamientos.data.map(element => element.unidad))
-        
     }, [mandamientos])
 
     if (mandamientos == null) return
@@ -76,19 +68,7 @@ function TablaMandamientos() {
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
-            {/* <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={age}
-                label="Age"
-                onChange={handleChange}
-            >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-            </Select> */}
-
+            <Filtros mandamientosDatos={mandamientos.data} />
             <TableContainer component={Paper} align="center">
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>
