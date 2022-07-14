@@ -68,7 +68,7 @@ function TablaMandamientos() {
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
-            <Filtros mandamientosDatos={mandamientos.data} />
+            <Filtros cambiarPagina={cambiarPagina} />
             <TableContainer component={Paper} align="center">
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>
