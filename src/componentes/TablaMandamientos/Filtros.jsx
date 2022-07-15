@@ -10,17 +10,20 @@ import Buscador from './Buscador/Buscador'
 
 import useFetchData from '../../hooks/useFetchData'
 
-function Filtros({ cambiarPagina }) {
-    const [busqueda, setBusqueda] = useState({ unidad: '', estatus: '', region: '', fiscal: '' })
-    const [catalogos, setCatalogos] = useFetchData('catalogos/mandamientos_filtros')
+const defaultValuesBusqueda = { id_unidad: '', estatus: '', id_region: '', id_fiscal: '' }
 
-    const handleChange = (event) => {
-        const defaultValues = { unidad: '', estatus: '', region: '' }
-        setBusqueda({ ...defaultValues, [event.target.name]: event.target.value })
-
-    }
+function Filtros({ actualizarTablaPorFiltro }) {
+    const [busqueda, setBusqueda] = useState(defaultValuesBusqueda)
+    const [catalogos, ] = useFetchData('catalogos/mandamientos_filtros')
 
     if (catalogos == null) return
+
+    const handleChange = (event) => {
+        setBusqueda({ ...defaultValuesBusqueda, [event.target.name]: event.target.value })
+        const itResetTable = (!!event.target.value) ? false : true
+        actualizarTablaPorFiltro(event.target.name, event.target.value, itResetTable)
+    }
+
     return (
         <>
             <Divider />
@@ -28,7 +31,7 @@ function Filtros({ cambiarPagina }) {
                 <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Unidad</InputLabel>
-                        <Select value={busqueda.unidad} onChange={handleChange} name="unidad">
+                        <Select value={busqueda.id_unidad} onChange={handleChange} name="id_unidad">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
                             {catalogos.catUnidades.map(unidad => <MenuItem key={unidad.id} value={unidad.id}>{unidad.nombre}</MenuItem>)}
                         </Select>
@@ -46,7 +49,7 @@ function Filtros({ cambiarPagina }) {
                 <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Region</InputLabel>
-                        <Select value={busqueda.region} onChange={handleChange} name="region">
+                        <Select value={busqueda.id_region} onChange={handleChange} name="id_region">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
                             {catalogos.catRegiones.map(region => <MenuItem key={region.id} value={region.id}>{region.nombre}</MenuItem>)}
                         </Select>
@@ -55,8 +58,9 @@ function Filtros({ cambiarPagina }) {
                 <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Fiscal</InputLabel>
-                        <Select value={busqueda.fiscal} onChange={handleChange} name="region">
+                        <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
+                            {catalogos.catFiscales.map(fiscal => <MenuItem key={fiscal.id} value={fiscal.id}>{fiscal.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>

@@ -26,7 +26,7 @@ function Fila(props) {
 
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' }, backgroundColor: row.estatus.toUpperCase() == "PROCESADO" ? '#05404d20' : '#fc058f20' }}>
+            <TableRow sx={{ '& > *': { borderBottom: 'unset' }, backgroundColor: (row.estatus.toUpperCase() == "AUTORIZADO" || row.estatus.toUpperCase() == "PROCESADO") ? '#05404d20' : '#fc058f20' }}>
                 <TableCell sx={{ width: "10px" }}>
                     <IconButton
                         aria-label="expand row"

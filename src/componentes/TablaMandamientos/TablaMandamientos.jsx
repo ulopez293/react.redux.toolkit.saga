@@ -22,7 +22,6 @@ import Filtros from './Filtros'
 
 import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
-import { useState } from 'react'
 
 function TablaMandamientos() {
     const detalle = useSelector((state) => state.detalle.detalle)
@@ -33,6 +32,9 @@ function TablaMandamientos() {
     const [pagina, setPagina] = React.useState(0)
     const [numeroDeFilasPorPagina, setNumeroDeFilasPorPagina] = React.useState(5)
     const [mandamientos, setMandamientos] = useFetchData("mandamientos")
+
+    const [itFilter, setItFilter] = React.useState(false)
+    const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: ''})
 
     React.useEffect(() => {
         if (mandamientos == null) return
@@ -61,14 +63,33 @@ function TablaMandamientos() {
     }
 
     const cambiarPagina = async (e) => {
-        let datos = await api(`mandamientos?page=${e.currentTarget.textContent}`, "GET")
-        setMandamientos(datos)
+        if (itFilter) {
+            const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
+            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${rutaFilter}`, "GET")
+            setMandamientos(datos)
+        } else {
+            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}`, "GET")
+            setMandamientos(datos)
+        }
+    }
+
+    const actualizarTablaPorFiltro = async (nombre, id, itResetTable) => {
+        if (itResetTable) {
+            let datos = await api(`mandamientos`, "GET")
+            setMandamientos(datos)
+            setItFilter(false)
+        } else {
+            let datos = await api(`mandamientos?page=1&${nombre}=${id}`, "GET")
+            setMandamientos(datos)
+            setItFilter(true)
+            setDataFilter({ nameFilter: nombre, idFilter: id })
+        }
     }
 
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
-            <Filtros cambiarPagina={cambiarPagina} />
+            <Filtros actualizarTablaPorFiltro={actualizarTablaPorFiltro} />
             <TableContainer component={Paper} align="center">
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>
