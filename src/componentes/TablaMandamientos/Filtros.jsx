@@ -65,7 +65,7 @@ function Filtros({ actualizarTablaPorFiltro }) {
                     </FormControl>
                 </Grid>
                 <Grid item xs={4}>
-                    <Buscador />
+                    <Buscador actualizarTablaPorFiltro={actualizarTablaPorFiltro} />
                 </Grid>
             </Grid>
             <Divider sx={{ mb: 2, mt: 2 }} />
