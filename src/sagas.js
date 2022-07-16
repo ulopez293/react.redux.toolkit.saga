@@ -1,14 +1,6 @@
-import { put, takeEvery } from 'redux-saga/effects'
-import { mostrarDetalle } from './slices/detalleSlice'
+import { takeEvery } from 'redux-saga/effects'
 import { sagaActions } from './sagaActions'
-
-function* cambioDetalleSaga(action) {
-    try {
-        yield put(mostrarDetalle(action.payload))
-    } catch (e) {
-        yield put({ type: sagaActions.CAMBIO_DETALLE_SAGA+'_FAILED', message: e.message })
-    }
-}
+import cambioDetalleSaga from './sagas/cambioDetalleSaga'
 
 function* sagas() {
     yield takeEvery(sagaActions.CAMBIO_DETALLE_SAGA, cambioDetalleSaga)

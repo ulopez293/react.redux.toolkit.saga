@@ -9,6 +9,8 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import MenuIcon from '@mui/icons-material/Menu'
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck'
 
 import './TablaMandamientos.css'
 
@@ -34,7 +36,7 @@ function TablaMandamientos() {
     const [mandamientos, setMandamientos] = useFetchData("mandamientos")
 
     const [itFilter, setItFilter] = React.useState(false)
-    const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: ''})
+    const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: '' })
 
     React.useEffect(() => {
         if (mandamientos == null) return
@@ -94,7 +96,8 @@ function TablaMandamientos() {
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell></TableCell>
+                            <TableCell><PlaylistAddCheckIcon /></TableCell>
+                            <TableCell><MenuIcon sx={{fontSize:'21px'}} /></TableCell>
                             <TableCell>No</TableCell>
                             <TableCell align="right">Región</TableCell>
                             <TableCell align="right">Unidad</TableCell>

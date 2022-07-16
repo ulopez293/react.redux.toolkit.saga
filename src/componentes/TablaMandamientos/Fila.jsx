@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import FeedIcon from '@mui/icons-material/Feed'
+import Checkbox from '@mui/material/Checkbox'
 
 import { sagaActions } from '../../sagaActions'
 
@@ -21,12 +22,21 @@ function Fila(props) {
 
     const deplegarDetalle = (event) => {
         let identificador = event.currentTarget.attributes.identificador.value
-        dispatch({ type: sagaActions.CAMBIO_DETALLE_SAGA , payload: { activo: true, id: identificador } })
+        dispatch({ type: sagaActions.CAMBIO_DETALLE_SAGA, payload: { activo: true, id: identificador } })
     }
 
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' }, backgroundColor: (row.estatus.toUpperCase() == "AUTORIZADO" || row.estatus.toUpperCase() == "PROCESADO") ? '#05404d20' : '#fc058f20' }}>
+                <TableCell padding="checkbox">
+                    <Checkbox
+                        color="primary"
+                        // indeterminate={numSelected > 0 && numSelected < rowCount}
+                        // checked={rowCount > 0 && numSelected === rowCount}
+                        // onChange={onSelectAllClick}
+                        inputProps={{ 'aria-label': 'select all desserts' }}
+                    />
+                </TableCell>
                 <TableCell sx={{ width: "10px" }}>
                     <IconButton
                         aria-label="expand row"
@@ -51,9 +61,9 @@ function Fila(props) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                            <Button variant="contained" 
-                                    identificador={row.id}
-                                    size='small' onClick={deplegarDetalle}>
+                            <Button variant="contained"
+                                identificador={row.id}
+                                size='small' onClick={deplegarDetalle}>
                                 <FeedIcon fontSize='small' sx={{ mr: '10px' }} />
                                 Detalle
                             </Button>
