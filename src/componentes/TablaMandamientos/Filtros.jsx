@@ -10,7 +10,7 @@ import Buscador from './Buscador/Buscador'
 
 import useFetchData from '../../hooks/useFetchData'
 
-const defaultValuesBusqueda = { id_unidad: '', estatus: '', id_region: '', id_fiscal: '' }
+const defaultValuesBusqueda = { id_unidad: '', id_estatus: '', id_region: '', id_fiscal: '' }
 
 function Filtros({ actualizarTablaPorFiltro }) {
     const [busqueda, setBusqueda] = useState(defaultValuesBusqueda)
@@ -40,7 +40,7 @@ function Filtros({ actualizarTablaPorFiltro }) {
                 <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Estatus</InputLabel>
-                        <Select value={busqueda.estatus} onChange={handleChange} name="estatus">
+                        <Select value={busqueda.id_estatus} onChange={handleChange} name="id_estatus">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
                             {catalogos.catEstatus.map(estatus => <MenuItem key={estatus.id} value={estatus.id}>{estatus.nombre}</MenuItem>)}
                         </Select>

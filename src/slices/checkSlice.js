@@ -18,5 +18,5 @@ const checkSlice = createSlice({
     }
 })
 
-export const { addChecks } = checkSlice.actions
+export const { addChecks, removeChecks } = checkSlice.actions
 export default checkSlice.reducer

@@ -51,7 +51,7 @@ function Fila(props) {
                 <TableCell align="right">{row.unidad}</TableCell>
                 <TableCell align="right">{row.no_mandato}</TableCell>
                 <TableCell align="right">{row.fecha_oficio}</TableCell>
-                <TableCell align="right">{row.nombre}</TableCell>
+                <TableCell align="right">{row.nombre_imputado}</TableCell>
                 <TableCell align="right">{row.carpeta_inv}</TableCell>
                 <TableCell align="right">{row.carpeta_inv}</TableCell>
                 <TableCell align="right"></TableCell>
@@ -81,8 +81,8 @@ Fila.propTypes = {
         region: PropTypes.string.isRequired,
         unidad: PropTypes.string.isRequired,
         no_mandato: PropTypes.string.isRequired,
-        fecha_oficio: PropTypes.string.isRequired,
-        nombre: PropTypes.string.isRequired,
+        fecha_oficio: PropTypes.string,//.isRequired,
+        nombre_imputado: PropTypes.string,//.isRequired,
         carpeta_inv: PropTypes.string.isRequired,
         estatus: PropTypes.string.isRequired
     }).isRequired,
