@@ -11,10 +11,12 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck'
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 
 import './TablaMandamientos.css'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { sagaActions } from '../../sagaActions'
 
 import TablaAccionesPaginacion from "./TablaAccionesPaginacion"
 import Fila from "./Fila"
@@ -26,6 +28,9 @@ import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
 
 function TablaMandamientos() {
+    const checks = useSelector((state) => state.check.checks)
+    const dispatch = useDispatch()
+
     const detalle = useSelector((state) => state.detalle.detalle)
 
     const [cantidadPaginas, setCantidadPaginas] = React.useState(0)
@@ -88,6 +93,8 @@ function TablaMandamientos() {
         }
     }
 
+    const removeAllChecks = () => dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_SAGA })
+
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
@@ -96,8 +103,13 @@ function TablaMandamientos() {
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell><PlaylistAddCheckIcon /></TableCell>
-                            <TableCell><MenuIcon sx={{fontSize:'21px'}} /></TableCell>
+                            <TableCell>
+                                    <PlaylistAddCheckIcon sx={{cursor:'pointer', fontSize:'x-large'}} />
+                            </TableCell>
+                            <TableCell>
+                                    <PlaylistRemoveIcon onClick={removeAllChecks} sx={{cursor:'pointer', fontSize:'x-large'}} />
+                            </TableCell>
+                            <TableCell><MenuIcon sx={{ fontSize: '21px' }} /></TableCell>
                             <TableCell>No</TableCell>
                             <TableCell align="right">Región</TableCell>
                             <TableCell align="right">Unidad</TableCell>

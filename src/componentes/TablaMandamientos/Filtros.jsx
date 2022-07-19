@@ -6,16 +6,20 @@ import Grid from '@mui/material/Grid'
 import FormControl from '@mui/material/FormControl'
 import Divider from '@mui/material/Divider'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import Badge from "@mui/material/Badge"
 
 import Buscador from './Buscador/Buscador'
 
 import useFetchData from '../../hooks/useFetchData'
 
+import { useSelector } from 'react-redux'
+
 const defaultValuesBusqueda = { id_unidad: '', id_estatus: '', id_region: '', id_fiscal: '' }
 
 function Filtros({ actualizarTablaPorFiltro }) {
+    const checks = useSelector((state) => state.check.checks)
     const [busqueda, setBusqueda] = useState(defaultValuesBusqueda)
-    const [catalogos, ] = useFetchData('catalogos/mandamientos_filtros')
+    const [catalogos,] = useFetchData('catalogos/mandamientos_filtros')
 
     if (catalogos == null) return
 
@@ -69,7 +73,9 @@ function Filtros({ actualizarTablaPorFiltro }) {
                     <Buscador actualizarTablaPorFiltro={actualizarTablaPorFiltro} />
                 </Grid>
                 <Grid item xs={1}>
-                    <ShoppingCartIcon sx={{mt:3, cursor:'pointer'}} />
+                    <Badge color="secondary" badgeContent={checks.length} sx={{ mt: 3, cursor: 'pointer' }}>
+                        <ShoppingCartIcon sx={{fontSize:'xx-large'}} />
+                    </Badge>
                 </Grid>
             </Grid>
             <Divider sx={{ mb: 2, mt: 2 }} />

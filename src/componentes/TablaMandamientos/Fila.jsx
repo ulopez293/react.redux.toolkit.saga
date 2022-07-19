@@ -37,15 +37,15 @@ function Fila(props) {
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' }, backgroundColor: (row.estatus.toUpperCase() == "AUTORIZADO" || row.estatus.toUpperCase() == "PROCESADO") ? '#05404d20' : '#fc058f20' }}>
-                <TableCell padding="checkbox">
-                    <Checkbox
+                <TableCell padding="checkbox" align="center" colSpan={2}>
+                    { row.estatus.toUpperCase() == "AUTORIZADO" ?  
+                        <Checkbox
                         color="primary"
                         checked={checks.some(item => item.id === row.id)}
-                        onChange={handleChecked}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
+                        onChange={handleChecked} /> : null
+                    }
                 </TableCell>
-                <TableCell sx={{ width: "10px" }}>
+                <TableCell>
                     <IconButton
                         aria-label="expand row"
                         size="small"
