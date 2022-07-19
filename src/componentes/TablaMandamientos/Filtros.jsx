@@ -5,6 +5,7 @@ import Select from '@mui/material/Select'
 import Grid from '@mui/material/Grid'
 import FormControl from '@mui/material/FormControl'
 import Divider from '@mui/material/Divider'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 
 import Buscador from './Buscador/Buscador'
 
@@ -55,7 +56,7 @@ function Filtros({ actualizarTablaPorFiltro }) {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Fiscal</InputLabel>
                         <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
@@ -66,6 +67,9 @@ function Filtros({ actualizarTablaPorFiltro }) {
                 </Grid>
                 <Grid item xs={4}>
                     <Buscador actualizarTablaPorFiltro={actualizarTablaPorFiltro} />
+                </Grid>
+                <Grid item xs={1}>
+                    <ShoppingCartIcon sx={{mt:3, cursor:'pointer'}} />
                 </Grid>
             </Grid>
             <Divider sx={{ mb: 2, mt: 2 }} />
