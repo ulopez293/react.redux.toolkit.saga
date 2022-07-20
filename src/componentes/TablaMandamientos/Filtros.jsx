@@ -29,6 +29,10 @@ function Filtros({ actualizarTablaPorFiltro }) {
         actualizarTablaPorFiltro(event.target.name, event.target.value, itResetTable)
     }
 
+    const showCarrito = () => {
+        
+    }
+
     return (
         <>
             <Divider />
@@ -74,7 +78,7 @@ function Filtros({ actualizarTablaPorFiltro }) {
                 </Grid>
                 <Grid item xs={1}>
                     <Badge color="secondary" badgeContent={checks.length} sx={{ mt: 3, cursor: 'pointer' }}>
-                        <ShoppingCartIcon sx={{fontSize:'xx-large'}} />
+                        <ShoppingCartIcon onClick={showCarrito} sx={{fontSize:'xx-large'}} />
                     </Badge>
                 </Grid>
             </Grid>

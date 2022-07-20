@@ -27,7 +27,8 @@ import Filtros from './Filtros'
 import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
 
-function TablaMandamientos() {
+function TablaMandamientos({ consumeRedux }) {
+    console.log(consumeRedux)
     const checks = useSelector((state) => state.check.checks)
     const dispatch = useDispatch()
 
