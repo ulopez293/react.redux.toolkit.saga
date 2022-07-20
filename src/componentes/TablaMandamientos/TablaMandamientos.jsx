@@ -95,6 +95,10 @@ function TablaMandamientos() {
 
     const removeAllChecks = () => dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_SAGA })
 
+    const addAllChecksOfThePage = () => {
+        mandamientos.data.map( mandamiento => dispatch({ type: sagaActions.ADD_CHECKS_SAGA, payload: mandamiento }))
+    }
+
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
@@ -104,7 +108,7 @@ function TablaMandamientos() {
                     <TableHead>
                         <TableRow>
                             <TableCell>
-                                    <PlaylistAddCheckIcon sx={{cursor:'pointer', fontSize:'x-large'}} />
+                                    <PlaylistAddCheckIcon onClick={addAllChecksOfThePage} sx={{cursor:'pointer', fontSize:'x-large'}} />
                             </TableCell>
                             <TableCell>
                                     <PlaylistRemoveIcon onClick={removeAllChecks} sx={{cursor:'pointer', fontSize:'x-large'}} />

@@ -9,7 +9,11 @@ const checkSlice = createSlice({
     initialState,
     reducers: {
         addChecks(state, action) {
-            state.checks.push(action.payload)
+            const notExistInState = !state.checks.some(item => item.id == action.payload.id)
+            const isAutorizado = (action.payload.estatus.toUpperCase() == 'AUTORIZADO')
+            if (notExistInState && isAutorizado) {
+                state.checks.push(action.payload)
+            }
         },
         removeChecks(state, action) {
             const { id } = action.payload
