@@ -10,15 +10,15 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import FeedIcon from '@mui/icons-material/Feed'
 import Checkbox from '@mui/material/Checkbox'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 
 import { sagaActions } from '../../sagaActions'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-function Fila(props) {
+function Fila({ row, consumeRedux }) {
     const checks = useSelector((state) => state.check.checks)
     const dispatch = useDispatch()
-    const { row } = props
     const [open, setOpen] = React.useState(false)
 
     const deplegarDetalle = (event) => {
@@ -38,11 +38,14 @@ function Fila(props) {
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' }, backgroundColor: (row.estatus.toUpperCase() == "AUTORIZADO" || row.estatus.toUpperCase() == "PROCESADO") ? '#05404d20' : '#fc058f20' }}>
                 <TableCell padding="checkbox" align="center" colSpan={2}>
-                    { row.estatus.toUpperCase() == "AUTORIZADO" ?  
+                    { row.estatus.toUpperCase()=="AUTORIZADO" && !consumeRedux ?  
                         <Checkbox
                         color="primary"
                         checked={checks.some(item => item.id === row.id)}
                         onChange={handleChecked} /> : null
+                    }
+                    {
+                       consumeRedux ? <DeleteOutlineIcon /> : null
                     }
                 </TableCell>
                 <TableCell>
@@ -54,7 +57,7 @@ function Fila(props) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">{row.id}</TableCell>
+                <TableCell component="th" scope="row">{row.llave}</TableCell>
                 <TableCell align="right">{row.region}</TableCell>
                 <TableCell align="right">{row.unidad}</TableCell>
                 <TableCell align="right">{row.no_mandato}</TableCell>

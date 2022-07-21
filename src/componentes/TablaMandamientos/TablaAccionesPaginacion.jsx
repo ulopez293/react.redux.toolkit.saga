@@ -10,22 +10,35 @@ import LastPageIcon from '@mui/icons-material/LastPage'
 
 
 function TablaAccionesPaginacion(props) {
+    const refFirstPage = React.useRef(null)
     const theme = useTheme()
-    const { count, page, rowsPerPage, onPageChange } = props
+    const { count, page, rowsPerPage, onPageChange, 
+            triggerFirstPage, triggerRestore, triggerPage } = props
+
+
+    React.useEffect(()=> {
+        if (triggerPage) {
+            refFirstPage.current.click()
+        }
+    }, [triggerPage])
 
     const handleFirstPageButtonClick = (event) => {
+        triggerRestore()
         onPageChange(event, 0)
     }
 
     const handleBackButtonClick = (event) => {
+        triggerRestore()
         onPageChange(event, page - 1)
     }
 
     const handleNextButtonClick = (event) => {
+        triggerRestore()
         onPageChange(event, page + 1)
     }
 
     const handleLastPageButtonClick = (event) => {
+        triggerRestore()
         onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1))
     }
 
@@ -33,6 +46,7 @@ function TablaAccionesPaginacion(props) {
         <Box sx={{ flexShrink: 0, ml: 2.5 }}>
             <IconButton
                 onClick={handleFirstPageButtonClick}
+                ref={refFirstPage}
                 disabled={page === 0}
                 aria-label="first page"
             >

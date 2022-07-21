@@ -27,8 +27,7 @@ import Filtros from './Filtros'
 import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
 
-function TablaMandamientos({ consumeRedux }) {
-    console.log(consumeRedux)
+function TablaMandamientos() {
     const checks = useSelector((state) => state.check.checks)
     const dispatch = useDispatch()
 
@@ -39,16 +38,36 @@ function TablaMandamientos({ consumeRedux }) {
     const [filasVacias, setFilasVacias] = React.useState(0)
     const [pagina, setPagina] = React.useState(0)
     const [numeroDeFilasPorPagina, setNumeroDeFilasPorPagina] = React.useState(5)
+    const [triggerPage, setTriggerPage] = React.useState(false)
     const [mandamientos, setMandamientos] = useFetchData("mandamientos")
 
     const [itFilter, setItFilter] = React.useState(false)
     const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: '' })
 
+    const [consumeRedux, setConsumeRedux] = React.useState(false)
+    
+
+    React.useEffect(()=>{
+        if (mandamientos == null) return
+        if (consumeRedux) {
+            triggerRestore()
+            triggerFirstPage()
+            setTimeout(()=> setMandamientos({ data: checks }) , 1)
+            
+        }
+    }, [consumeRedux])
+
     React.useEffect(() => {
         if (mandamientos == null) return
-        setCantidadPaginas(mandamientos.last_page)
-        setNumeroRegistros(mandamientos.total)
-        setFilasVacias(pagina > 0 ? Math.max(0, (1 + pagina) * numeroDeFilasPorPagina - mandamientos.data.length) : 0)
+        if (consumeRedux) {
+            setCantidadPaginas(1)
+            setNumeroRegistros(mandamientos.data.length)
+            setFilasVacias(pagina > 0 ? Math.max(0, (1 + pagina) * numeroDeFilasPorPagina - mandamientos.data.length) : 0)
+        } else {
+            setCantidadPaginas(mandamientos.last_page)
+            setNumeroRegistros(mandamientos.total)
+            setFilasVacias(pagina > 0 ? Math.max(0, (1 + pagina) * numeroDeFilasPorPagina - mandamientos.data.length) : 0)
+        }
     }, [mandamientos])
 
     if (mandamientos == null) return
@@ -66,27 +85,48 @@ function TablaMandamientos({ consumeRedux }) {
             ? mandamientos.data.slice(pagina * numeroDeFilasPorPagina, pagina * numeroDeFilasPorPagina + numeroDeFilasPorPagina)
             : mandamientos.data
         ).map((row) => (
-            <Fila key={row.id} row={row} />
+            <Fila key={row.id} row={row} consumeRedux={consumeRedux} />
         ))
     }
 
     const cambiarPagina = async (e) => {
         if (itFilter) {
+            triggerRestore()
+            triggerFirstPage()
             const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
             let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${rutaFilter}`, "GET")
             setMandamientos(datos)
         } else {
+            triggerRestore()
+            triggerFirstPage()
             let datos = await api(`mandamientos?page=${e.currentTarget.textContent}`, "GET")
             setMandamientos(datos)
         }
     }
 
+    async function resetTable() {
+        triggerRestore()
+        triggerFirstPage()
+        let datos = await api(`mandamientos`, "GET")
+        setMandamientos(datos)
+        setItFilter(false)
+    }
+
+    function triggerFirstPage() {
+        setTriggerPage(true)
+    }
+    function triggerRestore() {
+        setTriggerPage(false)
+    }
+
     const actualizarTablaPorFiltro = async (nombre, id, itResetTable) => {
         if (itResetTable) {
-            let datos = await api(`mandamientos`, "GET")
-            setMandamientos(datos)
-            setItFilter(false)
+            triggerRestore()
+            triggerFirstPage()
+            resetTable()
         } else {
+            triggerRestore()
+            triggerFirstPage()
             let datos = await api(`mandamientos?page=1&${nombre}=${id}`, "GET")
             setMandamientos(datos)
             setItFilter(true)
@@ -97,23 +137,30 @@ function TablaMandamientos({ consumeRedux }) {
     const removeAllChecks = () => dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_SAGA })
 
     const addAllChecksOfThePage = () => {
-        mandamientos.data.map( mandamiento => dispatch({ type: sagaActions.ADD_CHECKS_SAGA, payload: mandamiento }))
+        mandamientos.data.map(mandamiento => dispatch({ type: sagaActions.ADD_CHECKS_SAGA, payload: mandamiento }))
+    }
+
+    const showCarrito = () => {
+        if (checks.length == 0) return
+        setConsumeRedux(true)
     }
 
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
-            <Filtros actualizarTablaPorFiltro={actualizarTablaPorFiltro} />
+            {consumeRedux ? null : <Filtros actualizarTablaPorFiltro={actualizarTablaPorFiltro} showCarrito={showCarrito} />}
             <TableContainer component={Paper} align="center">
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>
-                                    <PlaylistAddCheckIcon onClick={addAllChecksOfThePage} sx={{cursor:'pointer', fontSize:'x-large'}} />
-                            </TableCell>
-                            <TableCell>
-                                    <PlaylistRemoveIcon onClick={removeAllChecks} sx={{cursor:'pointer', fontSize:'x-large'}} />
-                            </TableCell>
+                            {consumeRedux ? <><TableCell /><TableCell /></> : <>
+                                <TableCell sx={{backgroundColor:'#00ffa550'}}>
+                                    <PlaylistAddCheckIcon onClick={addAllChecksOfThePage} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
+                                </TableCell>
+                                <TableCell sx={{backgroundColor:'#fc058f50'}}>
+                                    <PlaylistRemoveIcon onClick={removeAllChecks} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
+                                </TableCell>
+                            </>}
                             <TableCell><MenuIcon sx={{ fontSize: '21px' }} /></TableCell>
                             <TableCell>No</TableCell>
                             <TableCell align="right">Región</TableCell>
@@ -144,22 +191,26 @@ function TablaMandamientos({ consumeRedux }) {
                                 rowsPerPage={numeroDeFilasPorPagina}
                                 labelRowsPerPage={"Filas por Página:"}
                                 page={pagina}
-                                SelectProps={{
-                                    inputProps: { 'aria-label': 'rows per page' },
-                                    native: true,
-                                }}
+                                SelectProps={{ inputProps: { 'aria-label': 'rows per page' }, native: true }}
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
-                                ActionsComponent={TablaAccionesPaginacion}
+                                ActionsComponent={(subprops) => {
+                                    return <TablaAccionesPaginacion {...subprops} 
+                                                triggerPage={triggerPage}
+                                                triggerFirstPage={triggerFirstPage} 
+                                                triggerRestore={triggerRestore} />
+                                }}
                             />
                         </TableRow>
                     </TableFooter>
                 </Table>
             </TableContainer>
-            <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
-            <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
-                Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas} | Total de Registros: {numeroRegistros}
-            </Typography>
+            {consumeRedux ? null : <>
+                <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
+                <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
+                    Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas} | Total de Registros: {numeroRegistros}
+                </Typography>
+            </>}
         </div>
     )
 }
