@@ -16,7 +16,7 @@ import { sagaActions } from '../../sagaActions'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-function Fila({ row, consumeRedux }) {
+function Fila({ row, consumeRedux, setMandamientos }) {
     const checks = useSelector((state) => state.check.checks)
     const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false)
@@ -24,6 +24,12 @@ function Fila({ row, consumeRedux }) {
     const deplegarDetalle = (event) => {
         let identificador = event.currentTarget.attributes.identificador.value
         dispatch({ type: sagaActions.CAMBIO_DETALLE_SAGA, payload: { activo: true, id: identificador } })
+    }
+
+    const removeItem = (id) => {
+        dispatch({ type: sagaActions.REMOVE_CHECKS_SAGA, payload: { id } })
+        const filter = checks.filter(item => item.id !== id)
+        setMandamientos({ data: filter })
     }
 
     const handleChecked = (event) => {
@@ -45,7 +51,7 @@ function Fila({ row, consumeRedux }) {
                         onChange={handleChecked} /> : null
                     }
                     {
-                       consumeRedux ? <DeleteOutlineIcon /> : null
+                       consumeRedux ? <DeleteOutlineIcon sx={{cursor:'pointer'}} onClick={()=>removeItem(row.id)} /> : null
                     }
                 </TableCell>
                 <TableCell>

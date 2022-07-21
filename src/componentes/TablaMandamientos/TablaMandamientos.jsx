@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck'
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 import './TablaMandamientos.css'
 
@@ -45,19 +47,8 @@ function TablaMandamientos() {
     const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: '' })
 
     const [consumeRedux, setConsumeRedux] = React.useState(false)
-    
 
-    React.useEffect(()=>{
-        if (mandamientos == null) return
-        if (consumeRedux) {
-            triggerRestore()
-            triggerFirstPage()
-            setTimeout(()=> setMandamientos({ data: checks }) , 1)
-            
-        }
-    }, [consumeRedux])
-
-    React.useEffect(() => {
+    const initialParameters = () => {
         if (mandamientos == null) return
         if (consumeRedux) {
             setCantidadPaginas(1)
@@ -68,6 +59,33 @@ function TablaMandamientos() {
             setNumeroRegistros(mandamientos.total)
             setFilasVacias(pagina > 0 ? Math.max(0, (1 + pagina) * numeroDeFilasPorPagina - mandamientos.data.length) : 0)
         }
+    }
+
+    React.useEffect(() => {
+        const onReloadChangeReact = () => {
+            if (mandamientos == null) return
+            initialParameters()
+            if (consumeRedux) {
+                triggerRestore()
+                triggerFirstPage()
+                setTimeout(() => setMandamientos({ data: checks }), 400)
+                console.log("onreload code changes")
+            }
+        }
+        onReloadChangeReact()
+    }, [])
+
+    React.useEffect(() => {
+        if (mandamientos == null) return
+        if (consumeRedux) {
+            triggerRestore()
+            triggerFirstPage()
+            setTimeout(() => setMandamientos({ data: checks }), 1)
+        }
+    }, [consumeRedux])
+
+    React.useEffect(() => {
+        initialParameters()
     }, [mandamientos])
 
     if (mandamientos == null) return
@@ -85,7 +103,7 @@ function TablaMandamientos() {
             ? mandamientos.data.slice(pagina * numeroDeFilasPorPagina, pagina * numeroDeFilasPorPagina + numeroDeFilasPorPagina)
             : mandamientos.data
         ).map((row) => (
-            <Fila key={row.id} row={row} consumeRedux={consumeRedux} />
+            <Fila key={row.id} row={row} consumeRedux={consumeRedux} setMandamientos={setMandamientos} />
         ))
     }
 
@@ -134,7 +152,10 @@ function TablaMandamientos() {
         }
     }
 
-    const removeAllChecks = () => dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_SAGA })
+    const removeAllChecks = () => {
+        dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_SAGA })
+        if (consumeRedux) setMandamientos({ data: [] })
+    }
 
     const addAllChecksOfThePage = () => {
         mandamientos.data.map(mandamiento => dispatch({ type: sagaActions.ADD_CHECKS_SAGA, payload: mandamiento }))
@@ -145,22 +166,32 @@ function TablaMandamientos() {
         setConsumeRedux(true)
     }
 
+    const volverCarrito = () => {
+        resetTable()
+        setConsumeRedux(false)
+    }
+
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
-            {consumeRedux ? null : <Filtros actualizarTablaPorFiltro={actualizarTablaPorFiltro} showCarrito={showCarrito} />}
+            {consumeRedux ? <Box sx={{ mt: 3, mb: 3 }} >
+                <Button variant="contained" size="large"
+                    onClick={volverCarrito}
+                    sx={{ bgcolor: 'secondary.main', mr: 3 }} >Volver</Button>
+                <Button variant="contained" size="large">Enviar al Bus</Button>
+            </Box> : <Filtros actualizarTablaPorFiltro={actualizarTablaPorFiltro} showCarrito={showCarrito} />}
             <TableContainer component={Paper} align="center">
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>
                         <TableRow>
-                            {consumeRedux ? <><TableCell /><TableCell /></> : <>
-                                <TableCell sx={{backgroundColor:'#00ffa550'}}>
+                            {consumeRedux ? <TableCell /> : <>
+                                <TableCell sx={{ backgroundColor: '#00ffa550' }}>
                                     <PlaylistAddCheckIcon onClick={addAllChecksOfThePage} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
                                 </TableCell>
-                                <TableCell sx={{backgroundColor:'#fc058f50'}}>
-                                    <PlaylistRemoveIcon onClick={removeAllChecks} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
-                                </TableCell>
                             </>}
+                            <TableCell sx={{ backgroundColor: '#fc058f50' }}>
+                                <PlaylistRemoveIcon onClick={removeAllChecks} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
+                            </TableCell>
                             <TableCell><MenuIcon sx={{ fontSize: '21px' }} /></TableCell>
                             <TableCell>No</TableCell>
                             <TableCell align="right">Región</TableCell>
@@ -195,17 +226,17 @@ function TablaMandamientos() {
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 ActionsComponent={(subprops) => {
-                                    return <TablaAccionesPaginacion {...subprops} 
-                                                triggerPage={triggerPage}
-                                                triggerFirstPage={triggerFirstPage} 
-                                                triggerRestore={triggerRestore} />
+                                    return <TablaAccionesPaginacion {...subprops}
+                                        triggerPage={triggerPage}
+                                        triggerFirstPage={triggerFirstPage}
+                                        triggerRestore={triggerRestore} />
                                 }}
                             />
                         </TableRow>
                     </TableFooter>
                 </Table>
             </TableContainer>
-            {consumeRedux ? null : <>
+            {consumeRedux ? <></> : <>
                 <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
                 <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
                     Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas} | Total de Registros: {numeroRegistros}
