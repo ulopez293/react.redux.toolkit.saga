@@ -111,8 +111,9 @@ export default function NavBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={toggleDrawer('left', true)}
           >
-            <MenuIcon onClick={toggleDrawer('left', true)} />
+            <MenuIcon />
           </IconButton>
           <Drawer
             anchor={'left'}
