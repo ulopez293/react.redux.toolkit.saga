@@ -9,7 +9,6 @@ import range from 'array-range'
 import { useState } from 'react'
 
 function Paginas({ cambiarPagina, cantidadPaginas }) {
-    console.log(cantidadPaginas);
     const [rangos, setRangos] = useState({ inicio: 1, fin: 1000 })
     const [arrayRange, setArrayRange] = useState(range(1, 1001))
 

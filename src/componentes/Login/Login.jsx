@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
+import { useNavigate } from "react-router-dom"
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,6 +29,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function Login() {
+    let navigate = useNavigate()
     const handleSubmit = (event) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
@@ -34,6 +37,7 @@ export default function Login() {
             email: data.get('email'),
             password: data.get('password'),
         })
+        navigate("/mandamientos", { replace: true })
     }
 
     return (

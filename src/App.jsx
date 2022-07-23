@@ -4,11 +4,13 @@ import store from './store'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Login from "./componentes/Login/Login"
+import NavBar from "./componentes/NavBar/NavBar"
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <NavBar />
         <div className="App">
           <Routes>
             <Route index element={<Login />} />
