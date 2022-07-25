@@ -26,7 +26,7 @@ function Paginas({ cambiarPagina, cantidadPaginas }) {
         if (!(cantidadPaginas > rangos.fin)) return
         const restante = cantidadPaginas - rangos.fin
         let inicio = rangos.fin + 1
-        let fin = (rangos.fin + restante) + 1
+        let fin = (restante>1000) ? (rangos.fin + 1000) + 1 : (rangos.fin + restante) + 1
         const array = range(inicio, fin)
         setArrayRange(array)
         const posicion = { inicio: inicio, fin: fin - 1 }

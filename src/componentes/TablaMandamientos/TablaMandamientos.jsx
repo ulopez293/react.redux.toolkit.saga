@@ -216,7 +216,7 @@ function TablaMandamientos() {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[]}
+                                rowsPerPageOptions={[5, 15, 50, 100]}
                                 colSpan={3}
                                 count={mandamientos.data.length}
                                 rowsPerPage={numeroDeFilasPorPagina}

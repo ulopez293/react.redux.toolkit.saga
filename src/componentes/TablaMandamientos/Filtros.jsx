@@ -35,6 +35,15 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito }) {
             <Grid container>
                 <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel>Region</InputLabel>
+                        <Select value={busqueda.id_region} onChange={handleChange} name="id_region">
+                            <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
+                            {catalogos.catRegiones.map(region => <MenuItem key={region.id} value={region.id}>{region.nombre}</MenuItem>)}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={2}>
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Unidad</InputLabel>
                         <Select value={busqueda.id_unidad} onChange={handleChange} name="id_unidad">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
@@ -44,28 +53,19 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito }) {
                 </Grid>
                 <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel>Estatus</InputLabel>
-                        <Select value={busqueda.id_estatus} onChange={handleChange} name="id_estatus">
+                        <InputLabel>Fiscal</InputLabel>
+                        <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
-                            {catalogos.catEstatus.map(estatus => <MenuItem key={estatus.id} value={estatus.id}>{estatus.nombre}</MenuItem>)}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={2}>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel>Region</InputLabel>
-                        <Select value={busqueda.id_region} onChange={handleChange} name="id_region">
-                            <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
-                            {catalogos.catRegiones.map(region => <MenuItem key={region.id} value={region.id}>{region.nombre}</MenuItem>)}
+                            {catalogos.catFiscales.map(fiscal => <MenuItem key={fiscal.id} value={fiscal.id}>{fiscal.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>
                 <Grid item xs={1}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel>Fiscal</InputLabel>
-                        <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
+                        <InputLabel>Estatus</InputLabel>
+                        <Select value={busqueda.id_estatus} onChange={handleChange} name="id_estatus">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
-                            {catalogos.catFiscales.map(fiscal => <MenuItem key={fiscal.id} value={fiscal.id}>{fiscal.nombre}</MenuItem>)}
+                            {catalogos.catEstatus.map(estatus => <MenuItem key={estatus.id} value={estatus.id}>{estatus.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -74,7 +74,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito }) {
                 </Grid>
                 <Grid item xs={1}>
                     <Badge color="secondary" badgeContent={checks.length} sx={{ mt: 3, cursor: 'pointer' }}>
-                        <ShoppingCartIcon onClick={showCarrito} sx={{fontSize:'xx-large'}} />
+                        <ShoppingCartIcon onClick={showCarrito} sx={{ fontSize: 'xx-large' }} />
                     </Badge>
                 </Grid>
             </Grid>
