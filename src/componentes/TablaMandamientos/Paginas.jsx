@@ -58,7 +58,7 @@ function Paginas({ cambiarPagina, cantidadPaginas }) {
         )
     }
     return (
-        <Box component="div" className="scrolly" sx={{ display: 'block', height: '45px', width: '100%', overflowX: 'scroll', margin: '20px' }}>
+        <Box component="div" className="scrolly" sx={{ display: 'block', height: '45px', width: '100%', overflowX: 'scroll', mt:2 }}>
             {Array.apply(null, Array(cantidadPaginas)).map((element, id) => {
                 return <React.Fragment key={id}>
                     <Button size="x-small" sx={{ display: 'contents' }}

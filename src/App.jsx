@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Login from "./componentes/Login/Login"
 import NavBar from "./componentes/NavBar/NavBar"
+import ProtectedRoute from "./ProtectedRoute"
 
 function App() {
   return (
@@ -14,7 +15,12 @@ function App() {
         <div className="App">
           <Routes>
             <Route index element={<Login />} />
-            <Route exact path="/mandamientos" element={<TablaMandamientos />} />
+            <Route exact path="/" element={<Login />} />
+            <Route exact path="/mandamientos" element={
+              <ProtectedRoute>
+                <TablaMandamientos />
+              </ProtectedRoute>
+            } />
             <Route path="*" element={<><h1>404 not found</h1></>} />
           </Routes>
         </div>

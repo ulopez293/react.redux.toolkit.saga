@@ -23,16 +23,26 @@ import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow'
 
-export default function NavBar() {
-  const [auth, setAuth] = React.useState(true)
-  const [anchorEl, setAnchorEl] = React.useState(null)
+import { useSelector, useDispatch } from 'react-redux'
+import { sagaActions } from '../../sagaActions'
 
+export default function NavBar() {
+  let login = useSelector((state) => state.login.login)
+  const dispatch = useDispatch()
+  let [auth, setAuth] = React.useState(login)
+  const [anchorEl, setAnchorEl] = React.useState(null)
   const [state, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
-  });
+  })
+
+  React.useEffect(()=>{
+    setAuth(login)
+  }, [login])
+
+  if (!login) return
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -91,6 +101,7 @@ export default function NavBar() {
 
   const handleChange = (event) => {
     setAuth(event.target.checked)
+    dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: event.target.checked })
   }
 
   const handleMenu = (event) => {

@@ -13,7 +13,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import { useNavigate } from "react-router-dom"
 
+import { useSelector, useDispatch } from 'react-redux'
+import { sagaActions } from '../../sagaActions'
+
 function Copyright(props) {
+
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -29,10 +33,13 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function Login() {
+    let auth = useSelector((state) => state.login.login)
+    const dispatch = useDispatch()
     let navigate = useNavigate()
     const handleSubmit = (event) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
+        dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
         console.log({
             email: data.get('email'),
             password: data.get('password'),
@@ -89,10 +96,6 @@ export default function Login() {
                             type="text"
                             id="token"
                             autoComplete="current-token"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
                         />
                         <Button
                             type="submit"

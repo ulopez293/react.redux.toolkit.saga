@@ -1,4 +1,5 @@
 import { put } from 'redux-saga/effects'
+import { sagaActions } from '../sagaActions'
 import { mostrarDetalle } from '../slices/detalleSlice'
 
 function* cambioDetalleSaga(action) {
