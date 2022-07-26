@@ -41,8 +41,9 @@ export default function Login() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 1,
-                        padding:5,
+                        marginTop: 0,
+                        paddingLeft:8,
+                        paddingRight: 8,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -51,12 +52,12 @@ export default function Login() {
                 >
                     <img src="http://sircinet.fiscaliaveracruz.gob.mx/CI/public/img/FGE_Favion-300x300.png"
                         alt="Logo" width={150} />
-                    <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
+                    <Typography component="h1" variant="h5" sx={{ mt: 0 }}>
                         Iniciar Sesión
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
                         <TextField
-                            margin="normal"
+                            sx={{mb:1}}
                             required
                             fullWidth
                             id="email"
@@ -64,9 +65,11 @@ export default function Login() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            variant="filled"
+                            size="small"
                         />
                         <TextField
-                            margin="normal"
+                            sx={{mb:1}}
                             required
                             fullWidth
                             name="password"
@@ -74,9 +77,11 @@ export default function Login() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            variant="filled"
+                            size="small"
                         />
                         <TextField
-                            margin="normal"
+                            sx={{mb:1}}
                             required
                             fullWidth
                             name="token"
@@ -84,6 +89,8 @@ export default function Login() {
                             type="text"
                             id="token"
                             autoComplete="current-token"
+                            variant="filled"
+                            size="small"
                         />
                         <Button
                             type="submit"
