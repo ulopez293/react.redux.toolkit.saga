@@ -2,8 +2,6 @@ import * as React from 'react'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -16,19 +14,6 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
-function Copyright(props) {
-
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    )
-}
 
 const theme = createTheme()
 
@@ -36,6 +21,9 @@ export default function Login() {
     let auth = useSelector((state) => state.login.login)
     const dispatch = useDispatch()
     let navigate = useNavigate()
+    
+    if (auth) return
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
@@ -114,7 +102,6 @@ export default function Login() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
         </ThemeProvider>
     )

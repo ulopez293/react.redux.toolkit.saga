@@ -6,15 +6,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./componentes/Login/Login"
 import NavBar from "./componentes/NavBar/NavBar"
 import ProtectedRoute from "./ProtectedRoute"
+import Copyright from "./componentes/Copyright"
 
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <div className="App">
         <NavBar />
-        <div className="App">
+        <BrowserRouter>
           <Routes>
-            <Route index element={<Login />} />
             <Route exact path="/" element={<Login />} />
             <Route exact path="/mandamientos" element={
               <ProtectedRoute>
@@ -23,8 +23,9 @@ function App() {
             } />
             <Route path="*" element={<><h1>404 not found</h1></>} />
           </Routes>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+        <Copyright sx={{ mt: 4, mb: 2 }} />
+      </div>
     </Provider>
   )
 }
