@@ -29,10 +29,7 @@ function App() {
           pt: 2, pb: 2, mt: 4, mb: 0,
           backgroundColor: '#1976d2', color: 'white'
         }} /> */}
-        <Copyright sx={{
-          pt: 2, pb: 2, mt: 4, mb: 0,
-          backgroundColor: 'silver', color: 'black'
-        }} />
+        <Copyright />
       </ThemeBackground>
     </Provider>
   )

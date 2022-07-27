@@ -55,7 +55,11 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: 'silver', color: 'black' }} >
+      <AppBar position="static" sx={{
+        backgroundColor: 'silver', color: 'black',
+        position: 'relative',
+        top: '-7.5px', left:'-3px'
+      }} >
         <Toolbar>
           <IconButton
             size="large"
@@ -79,12 +83,12 @@ export default function NavBar() {
               <img src={logo} width={120} alt="" sx={{ textAlign: 'left' }} />
             </Grid>
             <Grid item xs={5}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1, mt: 1 }}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, mt: 2 }}>
                 Sistema de "Mandamientos"
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 2 }}>
+              <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 3 }}>
                 Name Apellido Apellido
               </Typography>
             </Grid>

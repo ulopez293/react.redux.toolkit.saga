@@ -53,6 +53,7 @@ const ListMenu = (anchor, handleChange, toggleDrawer, auth) => (
                                 checked={auth}
                                 onChange={handleChange}
                                 aria-label="login switch"
+                                color="secondary"
                             />
                         }
                         label={auth ? 'Cerrar Sesion' : 'Iniciar Sesión'}
