@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
+import ThemeBackground from "./ThemeBackground"
 import Login from "./componentes/Login/Login"
 import NavBar from "./componentes/NavBar/NavBar"
 import ProtectedRoute from "./ProtectedRoute"
@@ -11,7 +12,7 @@ import Copyright from "./componentes/Copyright"
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
+      <ThemeBackground>
         <NavBar />
         <BrowserRouter>
           <Routes>
@@ -24,8 +25,15 @@ function App() {
             <Route path="*" element={<><h1>404 not found</h1></>} />
           </Routes>
         </BrowserRouter>
-        <Copyright sx={{ mt: 4, mb: 2 }} />
-      </div>
+        {/* <Copyright sx={{
+          pt: 2, pb: 2, mt: 4, mb: 0,
+          backgroundColor: '#1976d2', color: 'white'
+        }} /> */}
+        <Copyright sx={{
+          pt: 2, pb: 2, mt: 4, mb: 0,
+          backgroundColor: 'silver', color: 'black'
+        }} />
+      </ThemeBackground>
     </Provider>
   )
 }

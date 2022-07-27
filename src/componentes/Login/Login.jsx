@@ -14,8 +14,12 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
-
-const theme = createTheme()
+const image = 'http://localhost/DUGROP/public/Personal/img/Fiscalia-1.jpg'
+const theme = createTheme({
+    paperContainer: {
+        backgroundImage: `url(${Image})`
+    }
+})
 
 export default function Login() {
     let auth = useSelector((state) => state.login.login)
@@ -55,7 +59,7 @@ export default function Login() {
                     <Typography component="h1" variant="h5" sx={{ mt: 0 }}>
                         Iniciar Sesión
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3, mb:4 }}>
                         <TextField
                             sx={{mb:1}}
                             required
@@ -96,13 +100,14 @@ export default function Login() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            // sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, mb: 2, backgroundColor:'peru' }}
                         >
                             Ingresar
                         </Button>
                         <Grid container style={{textAlign:'center', display:'block'}}>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="#" variant="body2" sx={{color:'black'}} >
                                     ¿Olvidó la contraseña?
                                 </Link>
                             </Grid>

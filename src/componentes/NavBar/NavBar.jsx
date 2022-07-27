@@ -5,111 +5,48 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import Switch from '@mui/material/Switch'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormGroup from '@mui/material/FormGroup'
+import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
-
 import Drawer from '@mui/material/Drawer'
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow'
+import Avatar from '@mui/material/Avatar'
+
+import ListMenu from './ListMenu'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
+
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 export default function NavBar() {
   let login = useSelector((state) => state.login.login)
   const dispatch = useDispatch()
   let [auth, setAuth] = React.useState(login)
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  })
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const [state, setState] = React.useState({ left: false })
 
-  React.useEffect(()=>{
-    setAuth(login)
-  }, [login])
+  React.useEffect(() => { setAuth(login) }, [login])
 
   if (!login) return
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
+      return
     }
 
-    setState({ ...state, [anchor]: open });
-  };
-
-  const list = (anchor) => (
-    <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <Typography variant="h6" component="div" sx={{
-        pt: 2, pb: 2, width: '100%', backgroundColor: '#1976d2',
-        color:'white'
-      }}>
-        &nbsp;&nbsp;&nbsp;BUS-MANDAMIENTOS
-      </Typography>
-      <List>
-        {['Mandamientos'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DoubleArrowIcon />
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List sx={{ position: 'absolute', width: '100%', bottom: '0' }} >
-        <ListItem>
-          <FormGroup>
-            <FormControlLabel sx={{ width: 'fit-content' }}
-              control={
-                <Switch
-                  checked={auth}
-                  onChange={handleChange}
-                  aria-label="login switch"
-                />
-              }
-              label={auth ? 'Cerrar Sesion' : 'Iniciar Sesión'}
-            />
-          </FormGroup>
-        </ListItem>
-      </List>
-    </Box>
-  );
-
-
+    setState({ ...state, [anchor]: open })
+  }
 
   const handleChange = (event) => {
     setAuth(event.target.checked)
     dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: event.target.checked })
   }
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget)
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget)
   }
-
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
   }
 
   return (
@@ -131,26 +68,25 @@ export default function NavBar() {
             open={state['left']}
             onClose={toggleDrawer('left', false)}
           >
-            {list('left')}
+            {ListMenu('left', handleChange, toggleDrawer, auth)}
           </Drawer>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <img src="http://sircinet.fiscaliaveracruz.gob.mx/CI/public/img/FGE_Favion-300x300.png"
+            width={45} alt="" />
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
             Mandamientos
           </Typography>
           {auth && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
               <Menu
+                sx={{ mt: '45px' }}
                 id="menu-appbar"
-                anchorEl={anchorEl}
+                anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: 'top',
                   horizontal: 'right',
@@ -160,13 +96,16 @@ export default function NavBar() {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
               </Menu>
-            </div>
+            </Box>
           )}
         </Toolbar>
       </AppBar>
