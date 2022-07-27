@@ -11,10 +11,14 @@ import Menu from '@mui/material/Menu'
 import Drawer from '@mui/material/Drawer'
 import Avatar from '@mui/material/Avatar'
 
+import Grid from '@mui/material/Grid'
+
 import ListMenu from './ListMenu'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
+
+import logo from './logo.png'
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
@@ -51,7 +55,7 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: 'silver', color: 'black' }} >
         <Toolbar>
           <IconButton
             size="large"
@@ -70,11 +74,21 @@ export default function NavBar() {
           >
             {ListMenu('left', handleChange, toggleDrawer, auth)}
           </Drawer>
-          <img src="http://sircinet.fiscaliaveracruz.gob.mx/CI/public/img/FGE_Favion-300x300.png"
-            width={45} alt="" />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-            Mandamientos
-          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <img src={logo} width={120} alt="" sx={{ textAlign: 'left' }} />
+            </Grid>
+            <Grid item xs={5}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, mt: 1 }}>
+                Sistema de "Mandamientos"
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 2 }}>
+                Name Apellido Apellido
+              </Typography>
+            </Grid>
+          </Grid>
           {auth && (
 
             <Box sx={{ flexGrow: 0 }}>
@@ -109,6 +123,6 @@ export default function NavBar() {
           )}
         </Toolbar>
       </AppBar>
-    </Box>
+    </Box >
   )
 }
