@@ -27,10 +27,11 @@ export default function Login() {
         login: '', password: '', token: ''
     })
     const [isTokenCreated, setIsTokenCreated] = React.useState(null)
+    const [messageToken, setMessageToken] = React.useState('(No generado)')
 
     React.useEffect(() => {
         if (isTokenCreated == null) return
-        (isTokenCreated.estatus) ? alert("Token Generado Correctamente") : alert("No se pudo generar el token")
+        (isTokenCreated.estatus) ? setMessageToken('(Generado)') : setMessageToken('(No se pudo generar)')
     }, [isTokenCreated])
 
     if (auth) return
@@ -116,7 +117,7 @@ export default function Login() {
                             required
                             fullWidth
                             name="token"
-                            label="Token"
+                            label={`Token ${messageToken}`}
                             type="text"
                             id="token"
                             autoComplete="current-token"

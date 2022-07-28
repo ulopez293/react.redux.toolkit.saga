@@ -26,6 +26,7 @@ import logo from './logo.png'
 
 export default function NavBar() {
   let login = useSelector((state) => state.login.login)
+  let user = useSelector((state) => state.login.user)
   const dispatch = useDispatch()
   let [auth, setAuth] = React.useState(login)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -48,16 +49,18 @@ export default function NavBar() {
     dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: event.target.checked })
   }
 
-  const logout = () => {
-    setAuth(false)
-    dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false})
-  }
-
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
   }
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+  
+  const logout = () => {
+    handleCloseUserMenu()
+    setAuth(false)
+    dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
   }
 
   return (
@@ -96,7 +99,7 @@ export default function NavBar() {
             </Grid>
             <Grid item xs={3}>
               <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 3, textAlign: 'center' }}>
-                Luis Carmona
+                {user.datos_user.nombres} {user.datos_user.primer_ap} {user.datos_user.segundo_ap}
               </Typography>
             </Grid>
           </Grid>
@@ -127,24 +130,24 @@ export default function NavBar() {
                 <MenuItem onClick={handleCloseUserMenu}>
                   <PersonIcon />
                   <Typography textAlign="center" sx={{ ml: 1 }}>
-                    Luis Carmona
+                    {user.datos_user.nombres} {user.datos_user.primer_ap} {user.datos_user.segundo_ap}
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <AlternateEmailIcon />
                   <Typography textAlign="center" sx={{ ml: 1 }}>
-                    correo@gmail.com
+                    {user.email}
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <ClassIcon />
                   <Typography textAlign="center" sx={{ ml: 1 }}>
-                    rol usuario
+                    {user.roles[0].name}
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={logout}>
                   <PowerSettingsNewIcon />
-                  <Typography textAlign="center" onClick={logout} sx={{ ml: 1 }} >
+                  <Typography textAlign="center" sx={{ ml: 1 }} >
                     Salir
                   </Typography>
                 </MenuItem>

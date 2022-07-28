@@ -12,6 +12,10 @@ const loginSlice = createSlice({
     reducers: {
         changeLoginState(state, action) {
             state.login = action.payload
+            if (!action.payload) {
+                state.user = {}
+                state.access_token = null
+            }
         },
         setDataUserState(state, action) {
             state.user = action.payload.user
