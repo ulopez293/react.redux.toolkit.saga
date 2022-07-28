@@ -30,16 +30,25 @@ export default function Login() {
     const [messageToken, setMessageToken] = React.useState('(No generado)')
 
     React.useEffect(() => {
+        if (auth) {
+            navigate('/mandamientos')
+            return
+        }
+    }, [])
+
+    React.useEffect(() => {
         if (isTokenCreated == null) return
         (isTokenCreated.estatus) ? setMessageToken('(Generado)') : setMessageToken('(No se pudo generar)')
     }, [isTokenCreated])
 
-    if (auth) return
-
     const handleSubmit = async (event) => {
         event.preventDefault()
         let user = await callLogin(credentials)
-        if (!(Object.keys(user).length==0)) {
+        if (user.hasOwnProperty('message')) {
+            alert(user.message)
+            return
+        }
+        if (!(Object.keys(user).length == 0)) {
             dispatch({ type: sagaActions.SET_LOGIN_DATA_USER, payload: user })
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
             navigate("/mandamientos", { replace: true })
