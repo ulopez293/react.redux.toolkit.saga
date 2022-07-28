@@ -10,7 +10,10 @@ import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import Drawer from '@mui/material/Drawer'
 import Avatar from '@mui/material/Avatar'
-
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
+import PersonIcon from '@mui/icons-material/Person'
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail'
+import ClassIcon from '@mui/icons-material/Class'
 import Grid from '@mui/material/Grid'
 
 import ListMenu from './ListMenu'
@@ -20,7 +23,6 @@ import { sagaActions } from '../../sagaActions'
 
 import logo from './logo.png'
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 export default function NavBar() {
   let login = useSelector((state) => state.login.login)
@@ -46,6 +48,11 @@ export default function NavBar() {
     dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: event.target.checked })
   }
 
+  const logout = () => {
+    setAuth(false)
+    dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false})
+  }
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
   }
@@ -58,7 +65,7 @@ export default function NavBar() {
       <AppBar position="static" sx={{
         backgroundColor: 'silver', color: 'black',
         position: 'relative',
-        top: '-7.5px', left:'-3px'
+        top: '-7.5px', left: '-3px'
       }} >
         <Toolbar>
           <IconButton
@@ -83,13 +90,13 @@ export default function NavBar() {
               <img src={logo} width={120} alt="" sx={{ textAlign: 'left' }} />
             </Grid>
             <Grid item xs={5}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1, mt: 2 }}>
-                Sistema de "Mandamientos"
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1, mt: 2, textAlign: 'left' }}>
+                Sistema de Mandamientos
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 3 }}>
-                Name Apellido Apellido
+              <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 3, textAlign: 'center' }}>
+                Luis Carmona
               </Typography>
             </Grid>
           </Grid>
@@ -117,11 +124,30 @@ export default function NavBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <PersonIcon />
+                  <Typography textAlign="center" sx={{ ml: 1 }}>
+                    Luis Carmona
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <AlternateEmailIcon />
+                  <Typography textAlign="center" sx={{ ml: 1 }}>
+                    correo@gmail.com
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <ClassIcon />
+                  <Typography textAlign="center" sx={{ ml: 1 }}>
+                    rol usuario
+                  </Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <PowerSettingsNewIcon />
+                  <Typography textAlign="center" onClick={logout} sx={{ ml: 1 }} >
+                    Salir
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           )}

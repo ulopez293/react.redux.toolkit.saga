@@ -14,29 +14,53 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
-const image = 'http://localhost/DUGROP/public/Personal/img/Fiscalia-1.jpg'
-const theme = createTheme({
-    paperContainer: {
-        backgroundImage: `url(${Image})`
-    }
-})
+import callToken from '../../api/callToken'
+import callLogin from '../../api/callLogin'
+
+const theme = createTheme()
 
 export default function Login() {
     let auth = useSelector((state) => state.login.login)
     const dispatch = useDispatch()
     let navigate = useNavigate()
-    
+    const [credentials, setCredentials] = React.useState({
+        login: '', password: '', token: ''
+    })
+    const [isTokenCreated, setIsTokenCreated] = React.useState(null)
+
+    React.useEffect(() => {
+        if (isTokenCreated == null) return
+        (isTokenCreated.estatus) ? alert("Token Generado Correctamente") : alert("No se pudo generar el token")
+    }, [isTokenCreated])
+
     if (auth) return
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
-        const data = new FormData(event.currentTarget)
-        dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        })
-        navigate("/mandamientos", { replace: true })
+        let user = await callLogin(credentials)
+        if (!(Object.keys(user).length==0)) {
+            dispatch({ type: sagaActions.SET_LOGIN_DATA_USER, payload: user })
+            dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
+            navigate("/mandamientos", { replace: true })
+        }
+    }
+
+    const generarTokenBack = async (event) => {
+        if (credentials.login.trim() == '') return
+        if (isTokenCreated == null) {
+            let data = await callToken(credentials)
+            setIsTokenCreated(data)
+            return
+        }
+        if (isTokenCreated.estatus > 0) return
+        let data = await callToken(credentials)
+        setIsTokenCreated(data)
+    }
+
+    const handleChange = (event) => {
+        const { name, value } = event.target
+        let newValues = { ...credentials, [name]: value }
+        setCredentials({ ...newValues })
     }
 
     return (
@@ -46,7 +70,7 @@ export default function Login() {
                 <Box
                     sx={{
                         marginTop: 0,
-                        paddingLeft:8,
+                        paddingLeft: 8,
                         paddingRight: 8,
                         display: 'flex',
                         flexDirection: 'column',
@@ -59,21 +83,22 @@ export default function Login() {
                     <Typography component="h1" variant="h5" sx={{ mt: 0 }}>
                         Iniciar Sesión
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3, mb:4 }}>
+                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, mb: 4 }}>
                         <TextField
-                            sx={{mb:1}}
+                            sx={{ mb: 1 }}
                             required
                             fullWidth
                             id="email"
                             label="Usuario | Correo"
-                            name="email"
+                            name="login"
                             autoComplete="email"
                             autoFocus
                             variant="filled"
                             size="small"
+                            onChange={handleChange}
                         />
                         <TextField
-                            sx={{mb:1}}
+                            sx={{ mb: 1 }}
                             required
                             fullWidth
                             name="password"
@@ -83,9 +108,11 @@ export default function Login() {
                             autoComplete="current-password"
                             variant="filled"
                             size="small"
+                            onClick={generarTokenBack}
+                            onChange={handleChange}
                         />
                         <TextField
-                            sx={{mb:1}}
+                            sx={{ mb: 1 }}
                             required
                             fullWidth
                             name="token"
@@ -95,19 +122,21 @@ export default function Login() {
                             autoComplete="current-token"
                             variant="filled"
                             size="small"
+                            onClick={generarTokenBack}
+                            onChange={handleChange}
                         />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             // sx={{ mt: 3, mb: 2 }}
-                            sx={{ mt: 3, mb: 2, backgroundColor:'peru' }}
+                            sx={{ mt: 3, mb: 2, backgroundColor: 'peru' }}
                         >
                             Ingresar
                         </Button>
-                        <Grid container style={{textAlign:'center', display:'block'}}>
+                        <Grid container style={{ textAlign: 'center', display: 'block' }}>
                             <Grid item>
-                                <Link href="#" variant="body2" sx={{color:'black'}} >
+                                <Link href="#" variant="body2" sx={{ color: 'black' }} >
                                     ¿Olvidó la contraseña?
                                 </Link>
                             </Grid>
