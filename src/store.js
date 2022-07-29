@@ -15,7 +15,7 @@ import storage from 'redux-persist/lib/storage'
 let sagaMiddleware = createSagaMiddleware()
 const middleware = [sagaMiddleware]
 
-const expireMiliSeconds = 1000 * (60 * 60) // 1 hour
+const expireMiliSeconds = 1000 * (60 * 60)
 const expirationKey = "persistencyExpiration"
 const persistConfig = {
     key: 'root',

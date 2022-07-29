@@ -1,6 +1,6 @@
 import './Theme.css'
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 function ThemeBackground({ children }){
     let auth = useSelector((state) => state.login.login)
