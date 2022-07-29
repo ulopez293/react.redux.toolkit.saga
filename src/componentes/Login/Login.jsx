@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
 import callGenericDugrop from '../../api/callGenericDugrop'
-import isUserValidate from './isUserValidate'
+import isUserValidateRol from './isUserValidateRol'
 
 const theme = createTheme()
 
@@ -49,7 +49,7 @@ export default function Login() {
             return
         }
         if (!(Object.keys(user).length == 0)) {
-            if(!isUserValidate(user.user.roles[0].id)) return
+            if(!isUserValidateRol(user.user.roles[0].id)) return
             dispatch({ type: sagaActions.SET_LOGIN_DATA_USER, payload: user })
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
             navigate("/mandamientos", { replace: true })

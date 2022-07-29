@@ -1,6 +1,6 @@
 import { rolesID } from '../../utilidades/rolesID'
 
-const isUserValidate = (id_rol) => {
+const isUserValidateRol = (id_rol) => {
     if (id_rol == rolesID.ID_ROL_ADMINISTRADORES || id_rol == rolesID.ID_ROL_ENLACE) {
         return true
     }
@@ -8,4 +8,4 @@ const isUserValidate = (id_rol) => {
     return false
 }
 
-export default isUserValidate
+export default isUserValidateRol

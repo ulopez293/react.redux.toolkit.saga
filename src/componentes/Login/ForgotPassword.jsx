@@ -41,7 +41,7 @@ export default function ForgotPassword({ credentials }) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Reestablecer mi contraseña
+                        Restablecer mi contraseña
                     </Typography>
                     <TextField sx={{ mt: 3, mb: 3 }}
                         required
