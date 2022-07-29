@@ -1,11 +1,10 @@
 import server from '../server'
 
-const callLogin = async (credentials) => {
+const callGenericDugrop = async (url, metodo, body) => {
     try {
-        const body = JSON.stringify(credentials)
-        const response = await fetch(server.dugrop + 'login', {
-            method: 'POST',
-            body: body,
+        const response = await fetch(server.dugrop + url, {
+            method: metodo,
+            body: JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' }
         })
         const json = await response.json()
@@ -13,4 +12,4 @@ const callLogin = async (credentials) => {
     } catch (error) { console.log(error) }
 }
 
-export default callLogin
+export default callGenericDugrop

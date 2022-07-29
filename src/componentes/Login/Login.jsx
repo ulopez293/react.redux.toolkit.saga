@@ -14,8 +14,7 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
-import callToken from '../../api/callToken'
-import callLogin from '../../api/callLogin'
+import callGenericDugrop from '../../api/callGenericDugrop'
 import isUserValidate from './isUserValidate'
 
 const theme = createTheme()
@@ -44,7 +43,7 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        let user = await callLogin(credentials)
+        let user = await callGenericDugrop('login','POST',credentials)
         if (user.hasOwnProperty('message')) {
             alert(user.message)
             return
@@ -60,12 +59,12 @@ export default function Login() {
     const generarTokenBack = async (event) => {
         if (credentials.login.trim() == '') return
         if (isTokenCreated == null) {
-            let data = await callToken(credentials)
+            let data = await callGenericDugrop('get-token', 'POST', { login: credentials.login })
             setIsTokenCreated(data)
             return
         }
         if (isTokenCreated.estatus > 0) return
-        let data = await callToken(credentials)
+        let data = await callGenericDugrop('get-token', 'POST', { login: credentials.login })
         setIsTokenCreated(data)
     }
 
@@ -146,7 +145,7 @@ export default function Login() {
                         >
                             Ingresar
                         </Button>
-                        <ForgotPassword />
+                        <ForgotPassword credentials={credentials} />
                     </Box>
                 </Box>
             </Container>
