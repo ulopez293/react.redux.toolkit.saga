@@ -98,7 +98,7 @@ export default function NavBar() {
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 3, textAlign: 'center' }}>
+              <Typography variant="div" component="div" sx={{ flexGrow: 1, mt: 2, textAlign: 'center' }}>
                 {user.datos_user.nombres} {user.datos_user.primer_ap} {user.datos_user.segundo_ap}
               </Typography>
             </Grid>

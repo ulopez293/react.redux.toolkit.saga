@@ -5,13 +5,14 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow'
 import HomeIcon from '@mui/icons-material/Home'
 import Switch from '@mui/material/Switch'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import Typography from '@mui/material/Typography'
 import logo from './logo.png'
+
+import { Link } from "react-router-dom"
 
 const ListMenu = (anchor, handleChange, toggleDrawer, auth) => (
     <Box
@@ -32,16 +33,16 @@ const ListMenu = (anchor, handleChange, toggleDrawer, auth) => (
             &nbsp;&nbsp;&nbsp;<img src={logo} width={120} alt="" />
         </Typography>
         <List>
-            {['Inicio'].map((text, index) => (
-                <ListItem key={text} disablePadding >
+            <Link to="/mandamientos">
+                <ListItem disablePadding >
                     <ListItemButton>
                         <ListItemIcon>
                             <HomeIcon />
                         </ListItemIcon>
-                        <ListItemText primary={text} />
+                        <ListItemText primary='Inicio' />
                     </ListItemButton>
                 </ListItem>
-            ))}
+            </Link>
         </List>
         <Divider />
         <List sx={{ position: 'absolute', width: '100%', bottom: '0' }} >

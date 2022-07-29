@@ -15,8 +15,8 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeBackground>
-          <NavBar />
           <BrowserRouter>
+            <NavBar />
             <Routes>
               <Route exact path="/" element={<Login />} />
               <Route exact path="/mandamientos" element={

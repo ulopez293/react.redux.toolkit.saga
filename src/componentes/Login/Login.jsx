@@ -16,6 +16,7 @@ import { sagaActions } from '../../sagaActions'
 
 import callToken from '../../api/callToken'
 import callLogin from '../../api/callLogin'
+import isUserValidate from './isUserValidate'
 
 const theme = createTheme()
 
@@ -49,6 +50,7 @@ export default function Login() {
             return
         }
         if (!(Object.keys(user).length == 0)) {
+            if(!isUserValidate(user.user.roles[0].id)) return
             dispatch({ type: sagaActions.SET_LOGIN_DATA_USER, payload: user })
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
             navigate("/mandamientos", { replace: true })
