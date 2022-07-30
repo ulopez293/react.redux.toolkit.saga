@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
+import callGenericDugrop from '../../api/callGenericDugrop'
 
 const style = {
     position: 'absolute',
@@ -18,10 +19,25 @@ const style = {
     p: 4,
 }
 
-export default function ForgotPassword({ credentials }) {
+export default function ForgotPassword() {
     const [open, setOpen] = React.useState(false)
+    const [email, setEmail] = React.useState('')
+
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        let respuesta = await callGenericDugrop('password-email', 'POST', { email: email })
+        if (respuesta == null || respuesta == undefined){
+            alert("correo no enviado")
+            return
+        }
+        alert(respuesta.estatus)
+    }
+    const handleChange = (e) => {
+        setEmail(e.target.value)
+    }
 
     return (
         <div>
@@ -39,7 +55,7 @@ export default function ForgotPassword({ credentials }) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box component="form" sx={style} onSubmit={handleSubmit}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Restablecer mi contraseña
                     </Typography>
@@ -52,8 +68,11 @@ export default function ForgotPassword({ credentials }) {
                         autoComplete="email"
                         autoFocus
                         variant="filled"
+                        onChange={handleChange}
                         size="small" />
-                    <Button variant="contained" color='info' >Enviar</Button>
+                    <Button variant="contained" color='info' type="submit">
+                        Enviar
+                    </Button>
                 </Box>
             </Modal>
         </div>

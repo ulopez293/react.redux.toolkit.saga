@@ -43,13 +43,13 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        let user = await callGenericDugrop('login','POST',credentials)
+        let user = await callGenericDugrop('login', 'POST', credentials)
         if (user.hasOwnProperty('message')) {
             alert(user.message)
             return
         }
         if (!(Object.keys(user).length == 0)) {
-            if(!isUserValidateRol(user.user.roles[0].id)) return
+            if (!isUserValidateRol(user.user.roles[0].id)) return
             dispatch({ type: sagaActions.SET_LOGIN_DATA_USER, payload: user })
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
             navigate("/mandamientos", { replace: true })
@@ -94,58 +94,60 @@ export default function Login() {
                     <Typography component="h1" variant="h5" sx={{ mt: 0 }}>
                         Iniciar Sesión
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, mb: 4 }}>
-                        <TextField
-                            sx={{ mb: 1 }}
-                            required
-                            fullWidth
-                            id="email"
-                            label="Usuario | Correo"
-                            name="login"
-                            autoComplete="email"
-                            autoFocus
-                            variant="filled"
-                            size="small"
-                            onChange={handleChange}
-                        />
-                        <TextField
-                            sx={{ mb: 1 }}
-                            required
-                            fullWidth
-                            name="password"
-                            label="Contraseña"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            variant="filled"
-                            size="small"
-                            onClick={generarTokenBack}
-                            onChange={handleChange}
-                        />
-                        <TextField
-                            sx={{ mb: 1 }}
-                            required
-                            fullWidth
-                            name="token"
-                            label={`Token ${messageToken}`}
-                            type="text"
-                            id="token"
-                            autoComplete="current-token"
-                            variant="filled"
-                            size="small"
-                            onClick={generarTokenBack}
-                            onChange={handleChange}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            // sx={{ mt: 3, mb: 2 }}
-                            sx={{ mt: 3, mb: 2, backgroundColor: 'peru' }}
-                        >
-                            Ingresar
-                        </Button>
-                        <ForgotPassword credentials={credentials} />
+                    <Box sx={{ mt: 3, mb: 4 }}>
+                        <Box component="form" onSubmit={handleSubmit}>
+                            <TextField
+                                sx={{ mb: 1 }}
+                                required
+                                fullWidth
+                                id="email"
+                                label="Usuario | Correo"
+                                name="login"
+                                autoComplete="email"
+                                autoFocus
+                                variant="filled"
+                                size="small"
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                sx={{ mb: 1 }}
+                                required
+                                fullWidth
+                                name="password"
+                                label="Contraseña"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                variant="filled"
+                                size="small"
+                                onClick={generarTokenBack}
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                sx={{ mb: 1 }}
+                                required
+                                fullWidth
+                                name="token"
+                                label={`Token ${messageToken}`}
+                                type="text"
+                                id="token"
+                                autoComplete="current-token"
+                                variant="filled"
+                                size="small"
+                                onClick={generarTokenBack}
+                                onChange={handleChange}
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                // sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 3, mb: 2, backgroundColor: 'peru' }}
+                            >
+                                Ingresar
+                            </Button>
+                        </Box>
+                        <ForgotPassword />
                     </Box>
                 </Box>
             </Container>

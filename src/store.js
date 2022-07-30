@@ -20,13 +20,23 @@ const expirationKey = "persistencyExpiration"
 const persistConfig = {
     key: 'root',
     storage,
-    transforms: [expireIn(expireMiliSeconds, expirationKey, [])]
+    transforms: [
+        expireIn(expireMiliSeconds, expirationKey, [])
+    ],
+    whitelist: ['login']
 }
+
+const loginPersistConfig = {
+    key: 'login',
+    storage,
+    blacklist: ['user','access_token']
+  }
+
 
 const rootReducer = combineReducers({
     detalle: detalleReducer,
     check: checkReducer,
-    login: loginReducer
+    login: persistReducer(loginPersistConfig,loginReducer)
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
