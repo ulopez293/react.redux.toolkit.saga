@@ -42,11 +42,19 @@ function TablaMandamientos({ filtros }) {
     const [numeroDeFilasPorPagina, setNumeroDeFilasPorPagina] = React.useState(5)
     const [triggerPage, setTriggerPage] = React.useState(false)
     const [mandamientos, setMandamientos] = useFetchData("mandamientos")
-
+    
     const [itFilter, setItFilter] = React.useState(false)
     const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: '' })
-
+    
     const [consumeRedux, setConsumeRedux] = React.useState(false)
+    
+    let user = useSelector((state) => state.login.user)
+    React.useEffect(() => {
+        if (user == undefined) {
+            dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
+        }
+        asignarDatosSetMandamientos(mandamientos)
+    }, [])
 
     const initialParameters = () => {
         if (mandamientos == null) return
@@ -68,7 +76,7 @@ function TablaMandamientos({ filtros }) {
             if (consumeRedux) {
                 triggerRestore()
                 triggerFirstPage()
-                setTimeout(() => setMandamientos({ data: checks }), 400)
+                setTimeout(() => asignarDatosSetMandamientos({ data: checks }), 400)
                 console.log("onreload code changes")
             }
         }
@@ -80,7 +88,7 @@ function TablaMandamientos({ filtros }) {
         if (consumeRedux) {
             triggerRestore()
             triggerFirstPage()
-            setTimeout(() => setMandamientos({ data: checks }), 1)
+            setTimeout(() => asignarDatosSetMandamientos({ data: checks }), 1)
         }
     }, [consumeRedux])
 
@@ -103,7 +111,7 @@ function TablaMandamientos({ filtros }) {
             ? mandamientos.data.slice(pagina * numeroDeFilasPorPagina, pagina * numeroDeFilasPorPagina + numeroDeFilasPorPagina)
             : mandamientos.data
         ).map((row) => (
-            <Fila key={row.id} row={row} consumeRedux={consumeRedux} setMandamientos={setMandamientos} />
+            <Fila key={row.id} row={row} consumeRedux={consumeRedux} setMandamientos={asignarDatosSetMandamientos} />
         ))
     }
 
@@ -113,12 +121,12 @@ function TablaMandamientos({ filtros }) {
             triggerFirstPage()
             const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
             let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${rutaFilter}`, "GET")
-            setMandamientos(datos)
+            asignarDatosSetMandamientos(datos)
         } else {
             triggerRestore()
             triggerFirstPage()
             let datos = await api(`mandamientos?page=${e.currentTarget.textContent}`, "GET")
-            setMandamientos(datos)
+            asignarDatosSetMandamientos(datos)
         }
     }
 
@@ -126,7 +134,7 @@ function TablaMandamientos({ filtros }) {
         triggerRestore()
         triggerFirstPage()
         let datos = await api(`mandamientos`, "GET")
-        setMandamientos(datos)
+        asignarDatosSetMandamientos(datos)
         setItFilter(false)
     }
 
@@ -135,6 +143,18 @@ function TablaMandamientos({ filtros }) {
     }
     function triggerRestore() {
         setTriggerPage(false)
+    }
+
+    function asignarDatosSetMandamientos(datos) {
+        if (user.dato_fiscal == null) {
+            setMandamientos(datos)
+            return
+        }
+        let nombreRegion = (filtros.catRegiones.find(element => element.id == user.dato_fiscal.id_region)).nombre
+        let auxDatos = datos
+        let arrayFilter = datos.data.filter(item => item.region == nombreRegion)
+        auxDatos.data = arrayFilter
+        setMandamientos(auxDatos)
     }
 
     const actualizarTablaPorFiltro = async (nombre, id, itResetTable) => {
@@ -146,7 +166,7 @@ function TablaMandamientos({ filtros }) {
             triggerRestore()
             triggerFirstPage()
             let datos = await api(`mandamientos?page=1&${nombre}=${id}`, "GET")
-            setMandamientos(datos)
+            asignarDatosSetMandamientos(datos)
             setItFilter(true)
             setDataFilter({ nameFilter: nombre, idFilter: id })
         }
@@ -154,7 +174,7 @@ function TablaMandamientos({ filtros }) {
 
     const removeAllChecks = () => {
         dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_SAGA })
-        if (consumeRedux) setMandamientos({ data: [] })
+        if (consumeRedux) asignarDatosSetMandamientos({ data: [] })
     }
 
     const addAllChecksOfThePage = () => {
