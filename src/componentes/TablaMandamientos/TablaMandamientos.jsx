@@ -29,7 +29,7 @@ import Filtros from './Filtros'
 import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
 
-function TablaMandamientos() {
+function TablaMandamientos({ filtros }) {
     const checks = useSelector((state) => state.check.checks)
     const dispatch = useDispatch()
 
@@ -179,7 +179,7 @@ function TablaMandamientos() {
                     onClick={volverCarrito}
                     sx={{ bgcolor: 'secondary.main', mr: 3 }} >Volver</Button>
                 <Button variant="contained" size="large">Enviar al Bus</Button>
-            </Box> : <Filtros actualizarTablaPorFiltro={actualizarTablaPorFiltro} showCarrito={showCarrito} />}
+            </Box> : <Filtros catalogos={filtros} actualizarTablaPorFiltro={actualizarTablaPorFiltro} showCarrito={showCarrito} />}
             <TableContainer component={Paper} align="center">
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
                     <TableHead>

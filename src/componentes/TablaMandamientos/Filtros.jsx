@@ -16,10 +16,9 @@ import { useSelector } from 'react-redux'
 
 const defaultValuesBusqueda = { id_unidad: '', id_estatus: '', id_region: '', id_fiscal: '' }
 
-function Filtros({ actualizarTablaPorFiltro, showCarrito }) {
+function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
     const checks = useSelector((state) => state.check.checks)
     const [busqueda, setBusqueda] = useState(defaultValuesBusqueda)
-    const [catalogos,] = useFetchData('catalogos/mandamientos_filtros')
 
     if (catalogos == null) return
 

@@ -18,14 +18,14 @@ import Grid from '@mui/material/Grid'
 import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
 
 import ListMenu from './ListMenu'
+import logo from './logo.png'
 
+import useFetchData from '../../hooks/useFetchData'
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
-import logo from './logo.png'
 
-
-export default function NavBar() {
+export default function NavBar({ filtros }) {
   let login = useSelector((state) => state.login.login)
   let user = useSelector((state) => state.login.user)
   const dispatch = useDispatch()
@@ -36,6 +36,7 @@ export default function NavBar() {
   React.useEffect(() => { setAuth(login) }, [login])
 
   if (!login) return
+  if (filtros==null) return
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
