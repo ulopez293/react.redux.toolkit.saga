@@ -49,10 +49,13 @@ export default function Login() {
             return
         }
         if (!(Object.keys(user).length == 0)) {
-            if (!isUserValidateRol(user.user.roles[0].id)) return
-            dispatch({ type: sagaActions.SET_LOGIN_DATA_USER, payload: user })
-            dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
-            navigate("/mandamientos", { replace: true })
+            if (user.user.roles.some(rol => isUserValidateRol(rol.id))) {
+                dispatch({ type: sagaActions.SET_LOGIN_DATA_USER, payload: user })
+                dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: true })
+                navigate("/mandamientos", { replace: true })
+            } else {
+                alert("Rol de usuario no Valido")
+            }
         }
     }
 

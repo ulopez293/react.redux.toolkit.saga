@@ -146,6 +146,9 @@ function TablaMandamientos({ filtros }) {
     }
 
     function asignarDatosSetMandamientos(datos) {
+        if (user == undefined) {
+            dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
+        }
         if (user.dato_fiscal == null) {
             setMandamientos(datos)
             return
