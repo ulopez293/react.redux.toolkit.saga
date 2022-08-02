@@ -20,7 +20,6 @@ import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
 import ListMenu from './ListMenu'
 import logo from './logo.png'
 
-import useFetchData from '../../hooks/useFetchData'
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
@@ -34,9 +33,15 @@ export default function NavBar({ filtros }) {
   const [state, setState] = React.useState({ left: false })
 
   React.useEffect(() => { setAuth(login) }, [login])
+  React.useEffect(() => {
+    if (user == undefined) {
+      dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
+    }
+  }, [])
+
 
   if (!login) return
-  if (filtros==null) return
+  if (filtros == null) return
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -151,7 +156,7 @@ export default function NavBar({ filtros }) {
                   <MenuItem onClick={handleCloseUserMenu}>
                     <SouthAmericaIcon />
                     <Typography textAlign="center" sx={{ ml: 1 }}>
-                      {user.dato_fiscal.id_region}
+                      {(filtros.catRegiones.find(element => element.id == user.dato_fiscal.id_region)).nombre}
                     </Typography>
                   </MenuItem> : null}
                 <MenuItem onClick={logout}>

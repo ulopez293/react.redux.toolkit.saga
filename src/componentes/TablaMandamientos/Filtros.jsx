@@ -10,8 +10,6 @@ import Badge from "@mui/material/Badge"
 
 import Buscador from './Buscador/Buscador'
 
-import useFetchData from '../../hooks/useFetchData'
-
 import { useSelector } from 'react-redux'
 
 const defaultValuesBusqueda = { id_unidad: '', id_estatus: '', id_region: '', id_fiscal: '' }
@@ -19,6 +17,13 @@ const defaultValuesBusqueda = { id_unidad: '', id_estatus: '', id_region: '', id
 function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
     const checks = useSelector((state) => state.check.checks)
     const [busqueda, setBusqueda] = useState(defaultValuesBusqueda)
+
+    let user = useSelector((state) => state.login.user)
+    useEffect(() => {
+        if (user == undefined) {
+            dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
+        }
+    }, [])
 
     if (catalogos == null) return
 
@@ -33,13 +38,14 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
             <Divider />
             <Grid container>
                 <Grid item xs={2}>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel>Region</InputLabel>
-                        <Select value={busqueda.id_region} onChange={handleChange} name="id_region">
-                            <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
-                            {catalogos.catRegiones.map(region => <MenuItem key={region.id} value={region.id}>{region.nombre}</MenuItem>)}
-                        </Select>
-                    </FormControl>
+                    {(user.dato_fiscal != null) ? null
+                        : <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                            <InputLabel>Region</InputLabel>
+                            <Select value={busqueda.id_region} onChange={handleChange} name="id_region">
+                                <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
+                                {catalogos.catRegiones.map(region => <MenuItem key={region.id} value={region.id}>{region.nombre}</MenuItem>)}
+                            </Select>
+                        </FormControl>}
                 </Grid>
                 <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
