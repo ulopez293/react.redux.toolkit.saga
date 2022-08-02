@@ -51,7 +51,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito }) {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Fiscal</InputLabel>
                         <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
@@ -60,7 +60,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito }) {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Estatus</InputLabel>
                         <Select value={busqueda.id_estatus} onChange={handleChange} name="id_estatus">
@@ -69,7 +69,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito }) {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <Buscador actualizarTablaPorFiltro={actualizarTablaPorFiltro} />
                 </Grid>
                 <Grid item xs={1}>

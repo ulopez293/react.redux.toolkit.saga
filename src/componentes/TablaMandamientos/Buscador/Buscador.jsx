@@ -1,7 +1,8 @@
 import SearchIcon from '@mui/icons-material/Search'
 import Search from './Search'
-import StyledInputBase from './StyledInputBase'
-import SearchIconWrapper from './SearchIconWrapper'
+
+import TextField from '@mui/material/TextField '
+import IconButton from '@mui/material/IconButton'
 
 function Buscador({ actualizarTablaPorFiltro }) {
 
@@ -12,16 +13,39 @@ function Buscador({ actualizarTablaPorFiltro }) {
         actualizarTablaPorFiltro("search", e.target.value, itResetTable)
     }
 
+    const handleClick = (e) => {
+        let input = e.target.parentNode.parentNode.querySelector("input")
+        const itResetTable = (!!input.value) ? false : true
+        actualizarTablaPorFiltro("search", input.value, itResetTable)
+    }
+
     return (
-        <Search sx={{ mt: 3 }}>
-            <StyledInputBase
-                placeholder="Buscar…"
-                inputProps={{ 'aria-label': 'search' }}
+        <Search sx={{ mt: 0.3 }}>
+            <TextField
+                fullWidth
+                id="standard-bare"
+                variant="standard"
+                placeholder="escribe..."
+                InputProps={{
+                    'aria-label': 'search',
+                    endAdornment: (
+                        <IconButton onClick={handleClick}>
+                            <SearchIcon />
+                        </IconButton>
+                    ),
+                }}
+                label="Buscar"
+                size="small"
                 onKeyPress={search}
+                sx={{
+                    color: 'inherit',
+                    '& .MuiInputBase-input': {
+                        padding: '1',
+                        paddingLeft: `calc(1em)`,
+                        width: '20ch',
+                    },
+                }}
             />
-            <SearchIconWrapper sx={{ display: 'inline' }}>
-                <SearchIcon />
-            </SearchIconWrapper>
         </Search>
     )
 }

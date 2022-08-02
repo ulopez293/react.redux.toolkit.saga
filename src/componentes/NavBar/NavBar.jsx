@@ -15,6 +15,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail'
 import ClassIcon from '@mui/icons-material/Class'
 import Grid from '@mui/material/Grid'
+import SouthAmericaIcon from '@mui/icons-material/SouthAmerica';
 
 import ListMenu from './ListMenu'
 
@@ -56,7 +57,7 @@ export default function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
-  
+
   const logout = () => {
     handleCloseUserMenu()
     setAuth(false)
@@ -145,6 +146,13 @@ export default function NavBar() {
                     {user.roles[0].name}
                   </Typography>
                 </MenuItem>
+                {(user.dato_fiscal != null) ?
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <SouthAmericaIcon />
+                    <Typography textAlign="center" sx={{ ml: 1 }}>
+                      {user.dato_fiscal.id_region}
+                    </Typography>
+                  </MenuItem> : null}
                 <MenuItem onClick={logout}>
                   <PowerSettingsNewIcon />
                   <Typography textAlign="center" sx={{ ml: 1 }} >

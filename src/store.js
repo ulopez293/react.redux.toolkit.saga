@@ -29,14 +29,15 @@ const persistConfig = {
 const loginPersistConfig = {
     key: 'login',
     storage,
-    blacklist: ['user','access_token']
-  }
+    whitelist: ['login'],
+    blacklist: ['user', 'access_token']
+}
 
 
 const rootReducer = combineReducers({
     detalle: detalleReducer,
     check: checkReducer,
-    login: persistReducer(loginPersistConfig,loginReducer)
+    login: persistReducer(loginPersistConfig, loginReducer)
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
