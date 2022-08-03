@@ -14,7 +14,7 @@ function Buscador({ actualizarTablaPorFiltro }) {
     }
 
     const handleClick = (e) => {
-        let input = e.target.parentNode.parentNode.querySelector("input")
+        let input = e.currentTarget.parentNode.parentNode.querySelector("input")
         const itResetTable = (!!input.value) ? false : true
         actualizarTablaPorFiltro("search", input.value, itResetTable)
     }
