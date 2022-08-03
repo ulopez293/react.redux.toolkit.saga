@@ -49,11 +49,13 @@ function TablaMandamientos({ filtros }) {
     const [consumeRedux, setConsumeRedux] = React.useState(false)
     
     let user = useSelector((state) => state.login.user)
+
     React.useEffect(() => {
         if (user == undefined) {
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
         }
-        asignarDatosSetMandamientos(mandamientos)
+        if (mandamientos != null) asignarDatosSetMandamientos(mandamientos)
+        resetTable()
     }, [])
 
     const initialParameters = () => {

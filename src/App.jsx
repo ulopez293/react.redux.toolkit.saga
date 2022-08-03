@@ -14,6 +14,7 @@ import useFetchData from "./hooks/useFetchData"
 
 function App() {
   const [filtros] = useFetchData('catalogos/mandamientos_filtros')
+  if(filtros==null) return
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -30,10 +31,6 @@ function App() {
               <Route path="*" element={<><h1>404 not found</h1></>} />
             </Routes>
           </BrowserRouter>
-          {/* <Copyright sx={{
-          pt: 2, pb: 2, mt: 4, mb: 0,
-          backgroundColor: '#1976d2', color: 'white'
-        }} /> */}
           <Copyright />
         </ThemeBackground>
       </PersistGate>

@@ -9,7 +9,7 @@ import {
     persistStore, persistReducer,
     FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
 } from 'redux-persist'
-import expireIn from "redux-persist-transform-expire-in";
+import expireIn from "redux-persist-transform-expire-in"
 import storage from 'redux-persist/lib/storage'
 
 let sagaMiddleware = createSagaMiddleware()
