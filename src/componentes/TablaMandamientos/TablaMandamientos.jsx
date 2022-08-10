@@ -50,10 +50,27 @@ function TablaMandamientos({ filtros }) {
     
     let user = useSelector((state) => state.login.user)
 
+    // const aplicarFiltrosRegionUsuario = async () => {
+    //     if (user.dato_fiscal != null) {
+    //         setItFilter(true)
+    //         setDataFilter({ nameFilter: 'id_region', idFilter: user.dato_fiscal.id_region })
+
+    //         triggerRestore()
+    //         triggerFirstPage()
+    //         const rutaFilter = `&id_region=${user.dato_fiscal.id_region}`
+    //         let datos = await api(`mandamientos?page=1${rutaFilter}`, "GET")
+    //         asignarDatosSetMandamientos(datos)
+    //     }
+    // }
+    // React.useEffect(()=>{
+    //     aplicarFiltrosRegionUsuario()
+    // }, [user])
+
     React.useEffect(() => {
         if (user == undefined) {
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
         }
+        
         if (mandamientos != null) asignarDatosSetMandamientos(mandamientos)
         resetTable()
     }, [])
@@ -122,12 +139,14 @@ function TablaMandamientos({ filtros }) {
             triggerRestore()
             triggerFirstPage()
             const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
-            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${rutaFilter}`, "GET")
+            const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
+            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${rutaFilter}${filtroRegion}`, "GET")
             asignarDatosSetMandamientos(datos)
         } else {
             triggerRestore()
             triggerFirstPage()
-            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}`, "GET")
+            const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
+            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${filtroRegion}`, "GET")
             asignarDatosSetMandamientos(datos)
         }
     }
@@ -135,7 +154,8 @@ function TablaMandamientos({ filtros }) {
     async function resetTable() {
         triggerRestore()
         triggerFirstPage()
-        let datos = await api(`mandamientos`, "GET")
+        const filtroRegion = (user.dato_fiscal != null) ? `?id_region=${user.dato_fiscal.id_region}` : ''
+        let datos = await api(`mandamientos${filtroRegion}`, "GET")
         asignarDatosSetMandamientos(datos)
         setItFilter(false)
     }
@@ -155,6 +175,7 @@ function TablaMandamientos({ filtros }) {
             setMandamientos(datos)
             return
         }
+
         let nombreRegion = (filtros.catRegiones.find(element => element.id == user.dato_fiscal.id_region)).nombre
         let auxDatos = datos
         let arrayFilter = datos.data.filter(item => item.region == nombreRegion)
@@ -170,8 +191,9 @@ function TablaMandamientos({ filtros }) {
         } else {
             triggerRestore()
             triggerFirstPage()
-            let datos = await api(`mandamientos?page=1&${nombre}=${id}`, "GET")
-            asignarDatosSetMandamientos(datos)
+            const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
+            let datos = await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET")
+            asignarDatosSetMandamientos(await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET"))
             setItFilter(true)
             setDataFilter({ nameFilter: nombre, idFilter: id })
         }
