@@ -42,6 +42,10 @@ export default function NavBar({ filtros }) {
 
   if (!login) return
   if (filtros == null) return
+  if (user == undefined) {
+    dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
+    return
+  }
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

@@ -196,6 +196,11 @@ function TablaMandamientos({ filtros }) {
         setConsumeRedux(false)
     }
 
+    const enviarBus = () => {
+        let uuids = mandamientos.data.map(item => item.id)
+        console.log(JSON.stringify(uuids))
+    }
+
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
@@ -203,7 +208,7 @@ function TablaMandamientos({ filtros }) {
                 <Button variant="contained" size="large"
                     onClick={volverCarrito}
                     sx={{ bgcolor: 'secondary.main', mr: 3 }} >Volver</Button>
-                <Button variant="contained" size="large">Enviar al Bus</Button>
+                <Button onClick={enviarBus} variant="contained" size="large">Enviar al Bus</Button>
             </Box> : <Filtros catalogos={filtros} actualizarTablaPorFiltro={actualizarTablaPorFiltro} showCarrito={showCarrito} />}
             <TableContainer component={Paper} align="center">
                 <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
