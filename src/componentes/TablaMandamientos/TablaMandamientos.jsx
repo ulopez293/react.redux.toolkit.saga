@@ -28,6 +28,7 @@ import Filtros from './Filtros'
 
 import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
+import apiCall from '../../api/apiCall'
 
 function TablaMandamientos({ filtros }) {
     const checks = useSelector((state) => state.check.checks)
@@ -42,35 +43,19 @@ function TablaMandamientos({ filtros }) {
     const [numeroDeFilasPorPagina, setNumeroDeFilasPorPagina] = React.useState(5)
     const [triggerPage, setTriggerPage] = React.useState(false)
     const [mandamientos, setMandamientos] = useFetchData("mandamientos")
-    
+
     const [itFilter, setItFilter] = React.useState(false)
     const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: '' })
-    
+
     const [consumeRedux, setConsumeRedux] = React.useState(false)
-    
+
     let user = useSelector((state) => state.login.user)
-
-    // const aplicarFiltrosRegionUsuario = async () => {
-    //     if (user.dato_fiscal != null) {
-    //         setItFilter(true)
-    //         setDataFilter({ nameFilter: 'id_region', idFilter: user.dato_fiscal.id_region })
-
-    //         triggerRestore()
-    //         triggerFirstPage()
-    //         const rutaFilter = `&id_region=${user.dato_fiscal.id_region}`
-    //         let datos = await api(`mandamientos?page=1${rutaFilter}`, "GET")
-    //         asignarDatosSetMandamientos(datos)
-    //     }
-    // }
-    // React.useEffect(()=>{
-    //     aplicarFiltrosRegionUsuario()
-    // }, [user])
 
     React.useEffect(() => {
         if (user == undefined) {
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
         }
-        
+
         if (mandamientos != null) asignarDatosSetMandamientos(mandamientos)
         resetTable()
     }, [])
@@ -160,12 +145,8 @@ function TablaMandamientos({ filtros }) {
         setItFilter(false)
     }
 
-    function triggerFirstPage() {
-        setTriggerPage(true)
-    }
-    function triggerRestore() {
-        setTriggerPage(false)
-    }
+    function triggerFirstPage() { setTriggerPage(true) }
+    function triggerRestore() { setTriggerPage(false) }
 
     function asignarDatosSetMandamientos(datos) {
         if (user == undefined) {
@@ -218,9 +199,12 @@ function TablaMandamientos({ filtros }) {
         setConsumeRedux(false)
     }
 
-    const enviarBus = () => {
+    const enviarBus = async () => {
         let uuids = mandamientos.data.map(item => item.id)
-        console.log(JSON.stringify(uuids))
+        let body = { uuid: uuids }
+        // let response = await apiCall('POST', 'bus_mandato/send', 'host', body)
+        // console.log(body)
+        // console.log(response)
     }
 
     if (detalle.activo) return <Detalle />
