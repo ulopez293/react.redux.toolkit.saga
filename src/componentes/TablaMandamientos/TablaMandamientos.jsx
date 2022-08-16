@@ -25,6 +25,7 @@ import Fila from "./Fila"
 import Detalle from "../Detalle/Detalle"
 import Paginas from './Paginas'
 import Filtros from './Filtros'
+import BuscadorPagina from './Buscador/BuscadorPagina'
 
 import useFetchData from "../../hooks/useFetchData.jsx"
 import api from "../../api/api"
@@ -119,21 +120,29 @@ function TablaMandamientos({ filtros }) {
         ))
     }
 
-    const cambiarPagina = async (e) => {
+    const cambiarPaginaCallback = async (numberPage) => {
         if (itFilter) {
             triggerRestore()
             triggerFirstPage()
             const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
             const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
-            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${rutaFilter}${filtroRegion}`, "GET")
+            let datos = await api(`mandamientos?page=${numberPage}${rutaFilter}${filtroRegion}`, "GET")
             asignarDatosSetMandamientos(datos)
         } else {
             triggerRestore()
             triggerFirstPage()
             const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
-            let datos = await api(`mandamientos?page=${e.currentTarget.textContent}${filtroRegion}`, "GET")
+            let datos = await api(`mandamientos?page=${numberPage}${filtroRegion}`, "GET")
             asignarDatosSetMandamientos(datos)
         }
+    }
+
+    const cambiarPagina = async (e) => {
+        if (isNaN(e)) {
+            cambiarPaginaCallback(e.currentTarget.textContent)
+            return
+        }
+        cambiarPaginaCallback(e)
     }
 
     async function resetTable() {
@@ -203,7 +212,7 @@ function TablaMandamientos({ filtros }) {
         let uuids = mandamientos.data.map(item => item.id)
         let body = { uuid: uuids }
         // let response = await apiCall('POST', 'bus_mandato/send', 'host', body)
-        // console.log(body)
+        console.log(body)
         // console.log(response)
     }
 
@@ -274,6 +283,7 @@ function TablaMandamientos({ filtros }) {
             </TableContainer>
             {consumeRedux ? <></> : <>
                 <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
+                <BuscadorPagina cambiarPagina={cambiarPagina} />
                 <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
                     Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas} | Total de Registros: {numeroRegistros}
                 </Typography>
