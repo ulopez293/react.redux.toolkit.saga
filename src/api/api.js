@@ -4,9 +4,7 @@ function api(rutaAPI, metodo) {
     let url = server.host + rutaAPI
     let cabeceras = {
         method: metodo,
-        headers: new Headers(),
-        mode: 'cors',
-        cache: 'default'
+        headers: { 'Content-Type': 'application/json' }
     }
     let request = new Request(url, cabeceras)
     return fetch(request).then(async response => {

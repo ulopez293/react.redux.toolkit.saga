@@ -4,9 +4,7 @@ export default async (metodo, rutaAPI, sistem, cuerpo) => {
     let url = server[sistem] + rutaAPI
     let cabeceras = {
         method: metodo,
-        headers: new Headers(),
-        mode: 'cors',
-        cache: 'default'
+        headers: { 'Content-Type': 'application/json' }
     }
     if (cuerpo!=undefined) cabeceras.body = JSON.stringify(cuerpo)
     let request = new Request(url, cabeceras)

@@ -210,10 +210,20 @@ function TablaMandamientos({ filtros }) {
 
     const enviarBus = async () => {
         let uuids = mandamientos.data.map(item => item.id)
-        let body = { uuid: uuids }
-        // let response = await apiCall('POST', 'bus_mandato/send', 'host', body)
-        console.log(body)
-        // console.log(response)
+        let body = { uuids: uuids }
+        let response = await apiCall('POST', 'bus_mandato/send', 'host', body)
+        try {
+            if ('message' in response) {
+                alert(response.message)
+                resetTable()
+                setConsumeRedux(false)
+                removeAllChecks()
+            }
+        } catch (error) { 
+            alert("Error al enviar registros")
+            console.log(response)
+            console.log(error) 
+        }
     }
 
     if (detalle.activo) return <Detalle />
