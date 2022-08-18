@@ -42,16 +42,20 @@ function Fila({ row, consumeRedux, setMandamientos }) {
 
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' }, backgroundColor: (row.estatus.toUpperCase() == "AUTORIZADO" || row.estatus.toUpperCase() == "PROCESADO") ? '#05404d20' : '#fc058f20' }}>
+            <TableRow sx={{
+                '& > *': { borderBottom: 'unset' },
+                backgroundColor: (row.estatus.toUpperCase() == "AUTORIZADO") ? 'white' : 
+                (row.estatus.toUpperCase() == "ENVIADO") ? 'green' : (row.estatus.toUpperCase() == "PENDIENTE") ? 'yellow' : '#fc058f20'
+            }}>
                 <TableCell padding="checkbox" align="center" colSpan={2}>
-                    { row.estatus.toUpperCase()=="AUTORIZADO" && !consumeRedux ?  
+                    {row.estatus.toUpperCase() == "AUTORIZADO" && !consumeRedux ?
                         <Checkbox
-                        color="primary"
-                        checked={checks.some(item => item.id === row.id)}
-                        onChange={handleChecked} /> : null
+                            color="primary"
+                            checked={checks.some(item => item.id === row.id)}
+                            onChange={handleChecked} /> : null
                     }
                     {
-                       consumeRedux ? <DeleteOutlineIcon sx={{cursor:'pointer'}} onClick={()=>removeItem(row.id)} /> : null
+                        consumeRedux ? <DeleteOutlineIcon sx={{ cursor: 'pointer' }} onClick={() => removeItem(row.id)} /> : null
                     }
                 </TableCell>
                 <TableCell>

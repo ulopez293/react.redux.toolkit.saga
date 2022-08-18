@@ -156,11 +156,11 @@ export default function NavBar({ filtros }) {
                     {user.roles[0].name}
                   </Typography>
                 </MenuItem>
-                {(user.dato_fiscal.id_region != null) ?
+                {(user?.dato_fiscal?.id_region != null) ?
                   <MenuItem onClick={handleCloseUserMenu}>
                     <SouthAmericaIcon />
                     <Typography textAlign="center" sx={{ ml: 1 }}>
-                      {(filtros.catRegiones.find(element => element.id == user.dato_fiscal.id_region)).nombre}
+                      {(filtros.catRegiones.find(element => element.id == user?.dato_fiscal?.id_region)).nombre}
                     </Typography>
                   </MenuItem> : null}
                 <MenuItem onClick={logout}>
