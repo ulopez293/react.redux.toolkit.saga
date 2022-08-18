@@ -4,4 +4,8 @@
     background-size: cover;
     background-position: center;
     height: 100%;
+
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 2.5rem;
 }

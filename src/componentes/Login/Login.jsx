@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme  } from '@mui/material/styles'
 
 import ForgotPassword from './ForgotPassword'
 
@@ -17,7 +17,7 @@ import { sagaActions } from '../../sagaActions'
 import callGenericDugrop from '../../api/callGenericDugrop'
 import isUserValidateRol from './isUserValidateRol'
 
-const theme = createTheme()
+const theme = createTheme({})
 
 export default function Login() {
     let auth = useSelector((state) => state.login.login)
@@ -78,26 +78,35 @@ export default function Login() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" sx={{
+                        margin: 0,
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+            }}>
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 0,
+                        //marginTop: 0,
                         paddingLeft: 8,
                         paddingRight: 8,
+                        // paddingTop: 2,
+                        // paddingBottom: 2,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        backgroundColor: 'white'
+                        backgroundColor: 'white',
+                        justifyContent:'center',
+                        borderRadius: '25px',
                     }}
                 >
                     <img src="http://sircinet.fiscaliaveracruz.gob.mx/CI/public/img/FGE_Favion-300x300.png"
-                        alt="Logo" width={150} />
+                        alt="Logo" width={137} />
                     <Typography component="h1" variant="h5" sx={{ mt: 0 }}>
                         Iniciar Sesión
                     </Typography>
-                    <Box sx={{ mt: 3, mb: 4 }}>
+                    <Box sx={{ mt: 2, mb:2 }}>
                         <Box component="form" onSubmit={handleSubmit}>
                             <TextField
                                 sx={{ mb: 1 }}
@@ -154,6 +163,5 @@ export default function Login() {
                     </Box>
                 </Box>
             </Container>
-        </ThemeProvider>
     )
 }

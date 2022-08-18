@@ -161,7 +161,7 @@ function TablaMandamientos({ filtros }) {
         if (user == undefined) {
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
         }
-        if (user.dato_fiscal.id_region==null) {
+        if (user.dato_fiscal.id_region == null) {
             setMandamientos(datos)
             return
         }
@@ -220,10 +220,10 @@ function TablaMandamientos({ filtros }) {
                 setConsumeRedux(false)
                 removeAllChecks()
             }
-        } catch (error) { 
+        } catch (error) {
             alert("Error al enviar registros")
             console.log(response)
-            console.log(error) 
+            console.log(error)
         }
     }
 
@@ -269,9 +269,15 @@ function TablaMandamientos({ filtros }) {
                             </TableRow>
                         )}
                     </TableBody>
+                    <TableFooter><TableRow></TableRow></TableFooter>
+                </Table>
+            </TableContainer>
+            <TableContainer>
+                <Table>
                     <TableFooter>
                         <TableRow>
                             <TablePagination
+                                sx={{ justifyContent:"center", display:'flex' }}
                                 rowsPerPageOptions={[5, 15, 50, 100]}
                                 colSpan={3}
                                 count={mandamientos.data.length}

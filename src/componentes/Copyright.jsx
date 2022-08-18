@@ -3,15 +3,17 @@ import Link from '@mui/material/Link'
 
 import { useSelector } from 'react-redux'
 function Copyright() {
-    let auth = useSelector((state) => state.login.login)
+    //let auth = useSelector((state) => state.login.login)
     return (
         <Typography variant="body2" color="text.secondary" align="center"
             sx={{
-                pt: 2, pb: 2, mt: 4, mb: 0,
+                pt: 2, pb: 4, mt: 4, mb: 0,
                 backgroundColor: 'silver', color: 'black',
-                position: (auth) ? 'absolute' : '',
-                width:'100%',
-                left: (auth)  ? '-2.7px' : ''
+                clear: 'both',
+                position: 'absolute',
+                bottom: '0',
+                width: '100%',
+                height: '20px',
             }}
         >
             {'Copyright © '}

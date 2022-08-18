@@ -31,8 +31,8 @@ function App() {
               <Route path="*" element={<><h1>404 not found</h1></>} />
             </Routes>
           </BrowserRouter>
-          <Copyright />
         </ThemeBackground>
+          {/* <Copyright /> */}
       </PersistGate>
     </Provider>
   )
