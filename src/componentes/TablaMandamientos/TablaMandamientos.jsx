@@ -125,13 +125,13 @@ function TablaMandamientos({ filtros }) {
             triggerRestore()
             triggerFirstPage()
             const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
-            const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
+            const filtroRegion = (user.dato_fiscal.id_region != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
             let datos = await api(`mandamientos?page=${numberPage}${rutaFilter}${filtroRegion}`, "GET")
             asignarDatosSetMandamientos(datos)
         } else {
             triggerRestore()
             triggerFirstPage()
-            const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
+            const filtroRegion = (user.dato_fiscal.id_region != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
             let datos = await api(`mandamientos?page=${numberPage}${filtroRegion}`, "GET")
             asignarDatosSetMandamientos(datos)
         }
@@ -148,7 +148,7 @@ function TablaMandamientos({ filtros }) {
     async function resetTable() {
         triggerRestore()
         triggerFirstPage()
-        const filtroRegion = (user.dato_fiscal != null) ? `?id_region=${user.dato_fiscal.id_region}` : ''
+        const filtroRegion = (user.dato_fiscal.id_region != null) ? `?id_region=${user.dato_fiscal.id_region}` : ''
         let datos = await api(`mandamientos${filtroRegion}`, "GET")
         asignarDatosSetMandamientos(datos)
         setItFilter(false)
@@ -161,7 +161,7 @@ function TablaMandamientos({ filtros }) {
         if (user == undefined) {
             dispatch({ type: sagaActions.CHANGE_LOGIN_STATE_SAGA, payload: false })
         }
-        if (user.dato_fiscal == null) {
+        if (user.dato_fiscal.id_region==null) {
             setMandamientos(datos)
             return
         }
@@ -181,7 +181,7 @@ function TablaMandamientos({ filtros }) {
         } else {
             triggerRestore()
             triggerFirstPage()
-            const filtroRegion = (user.dato_fiscal != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
+            const filtroRegion = (user.dato_fiscal.id_region != null) ? `&id_region=${user.dato_fiscal.id_region}` : ''
             let datos = await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET")
             asignarDatosSetMandamientos(await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET"))
             setItFilter(true)

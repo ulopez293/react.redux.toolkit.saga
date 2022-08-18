@@ -38,7 +38,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
             <Divider />
             <Grid container>
                 <Grid item xs={2}>
-                    {(user.dato_fiscal != null) ? null
+                    {(user.dato_fiscal.id_region != null) ? null
                         : <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <InputLabel>Region</InputLabel>
                             <Select value={busqueda.id_region} onChange={handleChange} name="id_region">
@@ -56,7 +56,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                         <InputLabel>Fiscal</InputLabel>
                         <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
@@ -77,7 +77,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                 <Grid item xs={2}>
                     <Buscador actualizarTablaPorFiltro={actualizarTablaPorFiltro} />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                     <Badge color="secondary" badgeContent={checks.length} sx={{ mt: 3, cursor: 'pointer' }}>
                         <ShoppingCartIcon onClick={showCarrito} sx={{ fontSize: 'xx-large' }} />
                     </Badge>

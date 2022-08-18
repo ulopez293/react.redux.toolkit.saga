@@ -156,7 +156,7 @@ export default function NavBar({ filtros }) {
                     {user.roles[0].name}
                   </Typography>
                 </MenuItem>
-                {(user.dato_fiscal != null) ?
+                {(user.dato_fiscal.id_region != null) ?
                   <MenuItem onClick={handleCloseUserMenu}>
                     <SouthAmericaIcon />
                     <Typography textAlign="center" sx={{ ml: 1 }}>
