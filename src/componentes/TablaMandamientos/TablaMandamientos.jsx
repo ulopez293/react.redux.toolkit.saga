@@ -174,6 +174,7 @@ function TablaMandamientos({ filtros }) {
     }
 
     const actualizarTablaPorFiltro = async (nombre, id, itResetTable) => {
+        console.log("actualizar por filtro")
         if (itResetTable) {
             triggerRestore()
             triggerFirstPage()
