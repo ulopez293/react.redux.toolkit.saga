@@ -14,6 +14,7 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck'
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
 
 import './TablaMandamientos.css'
 
@@ -33,10 +34,12 @@ import apiCall from '../../api/apiCall'
 
 function TablaMandamientos({ filtros }) {
     const checks = useSelector((state) => state.check.checks)
+    const checkAll = useSelector((state) => state.checkAll.checks)
     const dispatch = useDispatch()
 
     const detalle = useSelector((state) => state.detalle.detalle)
 
+    const [ultimaRutaAPI, setUltimaRutaAPI] = React.useState('mandamientos')
     const [cantidadPaginas, setCantidadPaginas] = React.useState(0)
     const [numeroRegistros, setNumeroRegistros] = React.useState(0)
     const [filasVacias, setFilasVacias] = React.useState(0)
@@ -89,6 +92,10 @@ function TablaMandamientos({ filtros }) {
     }, [])
 
     React.useEffect(() => {
+        console.log(ultimaRutaAPI)
+    }, [ultimaRutaAPI])
+
+    React.useEffect(() => {
         if (mandamientos == null) return
         if (consumeRedux) {
             triggerRestore()
@@ -127,12 +134,14 @@ function TablaMandamientos({ filtros }) {
             const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
             const filtroRegion = (user?.dato_fiscal?.id_region != null) ? `&id_region=${user?.dato_fiscal?.id_region}` : ''
             let datos = await api(`mandamientos?page=${numberPage}${rutaFilter}${filtroRegion}`, "GET")
+            setUltimaRutaAPI(`mandamientos?page=${numberPage}${rutaFilter}${filtroRegion}`)
             asignarDatosSetMandamientos(datos)
         } else {
             triggerRestore()
             triggerFirstPage()
             const filtroRegion = (user?.dato_fiscal?.id_region != null) ? `&id_region=${user?.dato_fiscal?.id_region}` : ''
             let datos = await api(`mandamientos?page=${numberPage}${filtroRegion}`, "GET")
+            setUltimaRutaAPI(`mandamientos?page=${numberPage}${filtroRegion}`)
             asignarDatosSetMandamientos(datos)
         }
     }
@@ -150,6 +159,7 @@ function TablaMandamientos({ filtros }) {
         triggerFirstPage()
         const filtroRegion = (user?.dato_fiscal?.id_region != null) ? `?id_region=${user?.dato_fiscal?.id_region}` : ''
         let datos = await api(`mandamientos${filtroRegion}`, "GET")
+        setUltimaRutaAPI(`mandamientos${filtroRegion}`)
         asignarDatosSetMandamientos(datos)
         setItFilter(false)
     }
@@ -183,6 +193,7 @@ function TablaMandamientos({ filtros }) {
             triggerFirstPage()
             const filtroRegion = (user?.dato_fiscal?.id_region != null) ? `&id_region=${user?.dato_fiscal?.id_region}` : ''
             let datos = await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET")
+            setUltimaRutaAPI(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`)
             asignarDatosSetMandamientos(await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET"))
             setItFilter(true)
             setDataFilter({ nameFilter: nombre, idFilter: id })
@@ -190,11 +201,13 @@ function TablaMandamientos({ filtros }) {
     }
 
     const removeAllChecks = () => {
+        dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_ALLS_SAGA, payload: ultimaRutaAPI })
         dispatch({ type: sagaActions.REMOVE_ALL_CHECKS_SAGA })
         if (consumeRedux) asignarDatosSetMandamientos({ data: [] })
     }
 
     const addAllChecksOfThePage = () => {
+        dispatch({ type: sagaActions.ADD_CHECKS_ALLS_SAGA, payload: ultimaRutaAPI })
         mandamientos.data.map(mandamiento => dispatch({ type: sagaActions.ADD_CHECKS_SAGA, payload: mandamiento }))
     }
 
@@ -226,6 +239,15 @@ function TablaMandamientos({ filtros }) {
         }
     }
 
+    const handleCheckALL = (e) => {
+        console.log(ultimaRutaAPI)
+        if (e.target.checked) {
+            addAllChecksOfThePage()
+        } else {
+            removeAllChecks()
+        }
+    }
+
     if (detalle.activo) return <Detalle />
     return (
         <div align="center">
@@ -240,13 +262,20 @@ function TablaMandamientos({ filtros }) {
                     <TableHead>
                         <TableRow>
                             {consumeRedux ? <TableCell /> : <>
-                                <TableCell sx={{ backgroundColor: '#00ffa550' }}>
-                                    <PlaylistAddCheckIcon onClick={addAllChecksOfThePage} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
+                                <TableCell sx={{ backgroundColor: (checkAll) ? '#00ffa550' : '#fc058f50' }}>
+                                    <Checkbox
+                                        color="primary"
+                                        checked={checkAll.some(item => item == ultimaRutaAPI)}
+                                        onChange={handleCheckALL}
+                                    />
                                 </TableCell>
+                                {/* <TableCell sx={{ backgroundColor: '#00ffa550' }}>
+                                    <PlaylistAddCheckIcon onClick={addAllChecksOfThePage} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
+                                </TableCell> */}
                             </>}
-                            <TableCell sx={{ backgroundColor: '#fc058f50' }}>
+                            {/* <TableCell sx={{ backgroundColor: '#fc058f50' }}>
                                 <PlaylistRemoveIcon onClick={removeAllChecks} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell><MenuIcon sx={{ fontSize: '21px' }} /></TableCell>
                             <TableCell>No</TableCell>
                             <TableCell align="right">Región</TableCell>
@@ -276,7 +305,7 @@ function TablaMandamientos({ filtros }) {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                sx={{ justifyContent:"center", display:'flex' }}
+                                sx={{ justifyContent: "center", display: 'flex' }}
                                 rowsPerPageOptions={[5, 15, 50, 100]}
                                 colSpan={3}
                                 count={mandamientos.data.length}

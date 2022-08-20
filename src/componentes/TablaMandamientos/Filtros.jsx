@@ -28,7 +28,6 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
     if (catalogos == null) return
 
     const handleChange = (event) => {
-        console.log("change", busqueda)
         setBusqueda({ ...defaultValuesBusqueda, [event.target.name]: event.target.value })
         const itResetTable = (!!event.target.value) ? false : true
         actualizarTablaPorFiltro(event.target.name, event.target.value, itResetTable)

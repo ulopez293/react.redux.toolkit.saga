@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import api from "../api/api"
 
 const useFetchData = (BASE_URL = '') => {
+    localStorage.setItem('api_url', BASE_URL)
     const [fetch_data, setFetchData] = useState(null)
 
     useEffect(() => {

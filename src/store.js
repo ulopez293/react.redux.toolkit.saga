@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import detalleReducer from './slices/detalleSlice'
 import checkReducer from './slices/checkSlice'
 import loginReducer from './slices/loginSlice'
+import checkAllReducer from './slices/checkAllSlice'
 import { combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import sagas from './sagas'
@@ -37,6 +38,7 @@ const loginPersistConfig = {
 const rootReducer = combineReducers({
     detalle: detalleReducer,
     check: checkReducer,
+    checkAll: checkAllReducer,
     login: persistReducer(loginPersistConfig, loginReducer)
 })
 

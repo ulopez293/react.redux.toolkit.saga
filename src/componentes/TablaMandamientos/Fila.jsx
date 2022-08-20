@@ -47,7 +47,7 @@ function Fila({ row, consumeRedux, setMandamientos }) {
                 backgroundColor: (row.estatus.toUpperCase() == "AUTORIZADO") ? 'white' : 
                 (row.estatus.toUpperCase() == "ENVIADO") ? '#00fe0330' : (row.estatus.toUpperCase() == "PENDIENTE") ? '#f3fe0040' : '#fc058f20'
             }}>
-                <TableCell padding="checkbox" align="center" colSpan={2}>
+                <TableCell padding="checkbox" align="center" colSpan={1}>
                     {row.estatus.toUpperCase() == "AUTORIZADO" && !consumeRedux ?
                         <Checkbox
                             color="primary"

@@ -6,7 +6,7 @@ export default async (metodo, rutaAPI, sistem, cuerpo) => {
         method: metodo,
         headers: { 'Content-Type': 'application/json' }
     }
-    if (cuerpo!=undefined) cabeceras.body = JSON.stringify(cuerpo)
+    if (cuerpo != undefined) cabeceras.body = JSON.stringify(cuerpo)
     let request = new Request(url, cabeceras)
     return await fetch(request).then(async response => {
         const data = await response.json()
