@@ -262,7 +262,7 @@ function TablaMandamientos({ filtros }) {
                     <TableHead>
                         <TableRow>
                             {consumeRedux ? <TableCell /> : <>
-                                <TableCell sx={{ backgroundColor: (checkAll) ? '#00ffa550' : '#fc058f50' }}>
+                                <TableCell sx={{ backgroundColor: (checkAll.some(item => item == ultimaRutaAPI)) ? '#00ffa550' : '#fc058f50' }}>
                                     <Checkbox
                                         color="primary"
                                         checked={checkAll.some(item => item == ultimaRutaAPI)}
