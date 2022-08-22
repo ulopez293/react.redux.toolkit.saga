@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 
 function Carpeta({ mandamiento }) {
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, m:2 }}>
             <Grid container spacing={1} sx={{ textAlign: 'left' }}>
                 <Grid item md={3}>
                     <Typography variant="subtitle1" gutterBottom component="div">

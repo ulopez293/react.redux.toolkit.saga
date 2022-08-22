@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 
 function Mandamiento({ mandamiento }) {
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, m:2 }}>
             <Grid container spacing={1} sx={{ textAlign: 'left' }}>
                 <Grid item md={12}>
                     <Typography variant="subtitle2" gutterBottom component="div">

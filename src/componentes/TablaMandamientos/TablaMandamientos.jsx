@@ -92,10 +92,6 @@ function TablaMandamientos({ filtros }) {
     }, [])
 
     React.useEffect(() => {
-        console.log(ultimaRutaAPI)
-    }, [ultimaRutaAPI])
-
-    React.useEffect(() => {
         if (mandamientos == null) return
         if (consumeRedux) {
             triggerRestore()
@@ -240,7 +236,6 @@ function TablaMandamientos({ filtros }) {
     }
 
     const handleCheckALL = (e) => {
-        console.log(ultimaRutaAPI)
         if (e.target.checked) {
             addAllChecksOfThePage()
         } else {

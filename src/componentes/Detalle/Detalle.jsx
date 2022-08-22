@@ -4,12 +4,15 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from "@mui/material/Button"
 
-import AcordeonWrapper from "./AcordeonWrapper/AcordeonWrapper"
+//import AcordeonWrapper from "./AcordeonWrapper/AcordeonWrapper"
 import Carpeta from "./Secciones/Carpeta"
 import Mandamiento from "./Secciones/Mandamiento"
 import Proceso from "./Secciones/Proceso"
 import Delitos from "./Secciones/Delitos"
 import Alerta from "./Alerta/Alerta"
+
+import ListItemText from '@mui/material/ListItemText'
+import ListItem from '@mui/material/ListItem'
 
 import { sagaActions } from "../../sagaActions"
 
@@ -35,10 +38,16 @@ function Detalle() {
 
     if (mandamiento == null) return ''
 
-    const regresar = () => dispatch({ type: sagaActions.CAMBIO_DETALLE_SAGA , payload: { activo: false, id: '' } })
+    const regresar = () => dispatch({ type: sagaActions.CAMBIO_DETALLE_SAGA, payload: { activo: false, id: '' } })
 
     return (
         <Box sx={{ flexGrow: 1, p: 3 }}>
+            <Grid container spacing={3} sx={{ mb: 1, textAlign: 'right' }} justifyContent="flex-end">
+                <   Grid item md={10}></Grid>
+                <Grid item md={2}>
+                    <Button onClick={regresar} variant="contained" color="error">regresar</Button>
+                </Grid>
+            </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={12}>
                     <Alerta mandamiento={mandamiento} />
@@ -46,33 +55,32 @@ function Detalle() {
             </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={12}>
-                    <AcordeonWrapper titulo={`CARPETA: ${mandamiento.no_averiguacion}`} >
-                        <Carpeta mandamiento={mandamiento} />
-                    </AcordeonWrapper>
+                    <ListItem sx={{ background: 'green', color: 'white' }}>
+                        <ListItemText primary={`CARPETA: ${mandamiento.no_averiguacion}`} />
+                    </ListItem>
+                    <Carpeta mandamiento={mandamiento} />
                 </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={6}>
-                    <AcordeonWrapper titulo={`MANDAMIENTO: ${mandamiento.no_mandato}`} >
-                        <Mandamiento mandamiento={mandamiento} />
-                    </AcordeonWrapper>
+                    <ListItem sx={{ background: 'green', color: 'white' }}>
+                        <ListItemText primary={`MANDAMIENTO: ${mandamiento.no_mandato}`} />
+                    </ListItem>
+                    <Mandamiento mandamiento={mandamiento} />
                 </Grid>
                 <Grid item md={6}>
-                    <AcordeonWrapper titulo={`PROCESO: ${mandamiento.no_proceso}`} >
-                        <Proceso mandamiento={mandamiento} />
-                    </AcordeonWrapper>
+                    <ListItem sx={{ background: 'green', color: 'white' }}>
+                        <ListItemText primary={`PROCESO: ${mandamiento.no_proceso}`} />
+                    </ListItem>
+                    <Proceso mandamiento={mandamiento} />
                 </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={12}>
-                    <AcordeonWrapper titulo={`DELITOS: `} >
-                        <Delitos mandamiento={mandamiento} />
-                    </AcordeonWrapper>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} sx={{ mb: 3, textAlign: 'center' }}>
-                <Grid item md={12}>
-                    <Button onClick={regresar} variant="contained" color="error">regresar</Button>
+                    <ListItem sx={{ background: 'green', color: 'white' }}>
+                        <ListItemText primary={`DELITOS: `} />
+                    </ListItem>
+                    <Delitos mandamiento={mandamiento} />
                 </Grid>
             </Grid>
         </Box>
