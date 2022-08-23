@@ -54,21 +54,21 @@ function Detalle() {
                 </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
-                <Grid item md={12}>
+                <Grid item md={6}>
                     <ListItem sx={{ background: 'green', color: 'white' }}>
                         <ListItemText primary={`CARPETA: ${mandamiento.no_averiguacion}`} />
                     </ListItem>
                     <Carpeta mandamiento={mandamiento} />
                 </Grid>
-            </Grid>
-            <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={6}>
                     <ListItem sx={{ background: 'green', color: 'white' }}>
                         <ListItemText primary={`MANDAMIENTO: ${mandamiento.no_mandato}`} />
                     </ListItem>
                     <Mandamiento mandamiento={mandamiento} />
                 </Grid>
-                <Grid item md={6}>
+            </Grid>
+            <Grid container spacing={3} sx={{ mb: 3 }}>
+                <Grid item md={12}>
                     <ListItem sx={{ background: 'green', color: 'white' }}>
                         <ListItemText primary={`PROCESO: ${mandamiento.no_proceso}`} />
                     </ListItem>

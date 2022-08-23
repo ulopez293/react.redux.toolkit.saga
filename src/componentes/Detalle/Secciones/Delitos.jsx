@@ -16,6 +16,7 @@ function Delitos({ mandamiento }) {
                         <TableCell>CLAVE</TableCell>
                         <TableCell align="right">ID_BUS</TableCell>
                         <TableCell align="right">NOMBRE</TableCell>
+                        <TableCell align="right">ID_MODALIDAD</TableCell>
                         <TableCell align="right">PROPIEDADES</TableCell>
                     </TableRow>
                 </TableHead>
@@ -28,6 +29,7 @@ function Delitos({ mandamiento }) {
                             </TableCell>
                             <TableCell sx={{ fontSize: 'smaller' }} align="right">{delito.id_delito}</TableCell>
                             <TableCell sx={{ fontSize: 'smaller' }} align="right">{delito.delito}</TableCell>
+                            <TableCell sx={{ fontSize: 'smaller' }} align="right">{delito.id_modalidad}</TableCell>
                             <TableCell sx={{ fontSize: 'smaller' }} align="right">
                                 {esNuloOVacio(delito.grado_consumacion) ? '' : <>
                                     <strong>Grado de consumación: </strong>
