@@ -15,6 +15,7 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
+import Grid from '@mui/material/Grid'
 
 import './TablaMandamientos.css'
 
@@ -299,33 +300,43 @@ function TablaMandamientos({ filtros }) {
                 <Table>
                     <TableFooter>
                         <TableRow>
-                            <TablePagination
-                                sx={{ justifyContent: "center", display: 'flex' }}
-                                rowsPerPageOptions={[5, 15, 50, 100]}
-                                colSpan={3}
-                                count={mandamientos.data.length}
-                                rowsPerPage={numeroDeFilasPorPagina}
-                                labelRowsPerPage={"Filas por Página:"}
-                                page={pagina}
-                                SelectProps={{ inputProps: { 'aria-label': 'rows per page' }, native: true }}
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                ActionsComponent={(subprops) => {
-                                    return <TablaAccionesPaginacion {...subprops}
-                                        triggerPage={triggerPage}
-                                        triggerFirstPage={triggerFirstPage}
-                                        triggerRestore={triggerRestore} />
-                                }}
-                            />
+                                <Grid container sx={{mb:3, mt:3}}>
+                                    <Grid item xs={1}></Grid>
+                                    <Grid item xs={6}>
+                                        <TablePagination
+                                            sx={{ justifyContent: "left", display: 'flex' }}
+                                            rowsPerPageOptions={[5, 15, 50, 100]}
+                                            colSpan={3}
+                                            count={mandamientos.data.length}
+                                            rowsPerPage={numeroDeFilasPorPagina}
+                                            labelRowsPerPage={"Filas por Página:"}
+                                            page={pagina}
+                                            SelectProps={{ inputProps: { 'aria-label': 'rows per page' }, native: true }}
+                                            onPageChange={handleChangePage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            ActionsComponent={(subprops) => {
+                                                return <TablaAccionesPaginacion {...subprops}
+                                                    triggerPage={triggerPage}
+                                                    triggerFirstPage={triggerFirstPage}
+                                                    triggerRestore={triggerRestore} />
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <BuscadorPagina cambiarPagina={cambiarPagina} />
+                                    </Grid>
+                                    <Grid item xs={1}></Grid>
+                                </Grid>
                         </TableRow>
                     </TableFooter>
                 </Table>
             </TableContainer>
             {consumeRedux ? <></> : <>
                 <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
-                <BuscadorPagina cambiarPagina={cambiarPagina} />
+                {/* <BuscadorPagina cambiarPagina={cambiarPagina} /> */}
                 <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
-                    Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas} | Total de Registros: {numeroRegistros}
+                    Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas}
+                    {/* | Total de Registros: {numeroRegistros} */}
                 </Typography>
             </>}
         </div>

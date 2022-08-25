@@ -16,6 +16,9 @@ import ListItem from '@mui/material/ListItem'
 
 import { sagaActions } from "../../sagaActions"
 
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+
 import api from "../../api/api"
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -41,9 +44,9 @@ function Detalle() {
     const regresar = () => dispatch({ type: sagaActions.CAMBIO_DETALLE_SAGA, payload: { activo: false, id: '' } })
 
     return (
-        <Box sx={{ flexGrow: 1, p: 3 }}>
-            <Grid container spacing={3} sx={{ mb: 1, textAlign: 'right' }} justifyContent="flex-end">
-                <   Grid item md={10}></Grid>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={3} sx={{ pt: 2, pr:2, textAlign: 'right' }} justifyContent="flex-end">
+                <Grid item md={10}></Grid>
                 <Grid item md={2}>
                     <Button onClick={regresar} variant="contained" color="error">regresar</Button>
                 </Grid>
@@ -55,32 +58,48 @@ function Detalle() {
             </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={6}>
-                    <ListItem sx={{ background: 'green', color: 'white' }}>
-                        <ListItemText primary={`CARPETA: ${mandamiento.no_averiguacion}`} />
-                    </ListItem>
-                    <Carpeta mandamiento={mandamiento} />
+                    <Card>
+                        <CardContent sx={{p:1}}>
+                            <ListItem sx={{ background: 'green', color: 'white' }}>
+                                <ListItemText primary={`CARPETA: ${mandamiento.no_averiguacion}`} />
+                            </ListItem>
+                            <Carpeta mandamiento={mandamiento} />
+                        </CardContent>
+                    </Card>
                 </Grid>
                 <Grid item md={6}>
-                    <ListItem sx={{ background: 'green', color: 'white' }}>
-                        <ListItemText primary={`MANDAMIENTO: ${mandamiento.no_mandato}`} />
-                    </ListItem>
-                    <Mandamiento mandamiento={mandamiento} />
+                    <Card>
+                        <CardContent sx={{p:1}}>
+                            <ListItem sx={{ background: 'green', color: 'white' }}>
+                                <ListItemText primary={`MANDAMIENTO: ${mandamiento.no_mandato}`} />
+                            </ListItem>
+                            <Mandamiento mandamiento={mandamiento} />
+                        </CardContent>
+                    </Card>
                 </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={12}>
-                    <ListItem sx={{ background: 'green', color: 'white' }}>
-                        <ListItemText primary={`PROCESO: ${mandamiento.no_proceso}`} />
-                    </ListItem>
-                    <Proceso mandamiento={mandamiento} />
+                    <Card>
+                        <CardContent sx={{p:1}}>
+                            <ListItem sx={{ background: 'green', color: 'white' }}>
+                                <ListItemText primary={`PROCESO: ${mandamiento.no_proceso}`} />
+                            </ListItem>
+                            <Proceso mandamiento={mandamiento} />
+                        </CardContent>
+                    </Card>
                 </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ mb: 3 }}>
                 <Grid item md={12}>
-                    <ListItem sx={{ background: 'green', color: 'white' }}>
-                        <ListItemText primary={`DELITOS: `} />
-                    </ListItem>
-                    <Delitos mandamiento={mandamiento} />
+                    <Card>
+                        <CardContent sx={{p:1}}>
+                            <ListItem sx={{ background: 'green', color: 'white' }}>
+                                <ListItemText primary={`DELITOS: `} />
+                            </ListItem>
+                            <Delitos mandamiento={mandamiento} />
+                        </CardContent>
+                    </Card>
                 </Grid>
             </Grid>
         </Box>

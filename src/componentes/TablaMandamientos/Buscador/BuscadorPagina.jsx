@@ -20,10 +20,6 @@ function BuscadorPagina({ cambiarPagina }) {
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container>
-                <Grid item xs={5}></Grid>
-                <Grid item xs={2}>
                     <Search>
                         <TextField
                             fullWidth
@@ -44,10 +40,14 @@ function BuscadorPagina({ cambiarPagina }) {
                             sx={{ color: 'inherit' }}
                         />
                     </Search>
-                </Grid>
-                <Grid item xs={5}></Grid>
-            </Grid>
-        </Box>
+        // <Box sx={{ flexGrow: 1 }}>
+        //     <Grid container>
+        //         <Grid item xs={5}></Grid>
+        //         <Grid item xs={2}>
+        //         </Grid>
+        //         <Grid item xs={5}></Grid>
+        //     </Grid>
+        // </Box>
     )
 }
 
