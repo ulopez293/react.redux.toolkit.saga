@@ -17,6 +17,7 @@ import { sagaActions } from '../../sagaActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 function Fila({ row, consumeRedux, setMandamientos }) {
+    const stylesFila = {padding:1, width:'10%', fontSize:'small'}
     const checks = useSelector((state) => state.check.checks)
     const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false)
@@ -67,17 +68,17 @@ function Fila({ row, consumeRedux, setMandamientos }) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">{row.llave}</TableCell>
-                <TableCell align="right">{row.region}</TableCell>
-                <TableCell align="right">{row.unidad}</TableCell>
-                <TableCell align="right">{row.no_mandato}</TableCell>
-                <TableCell align="right">{row.fecha_oficio}</TableCell>
-                <TableCell align="right">{row.nombre_imputado}</TableCell>
-                <TableCell align="right">{row.carpeta_inv}</TableCell>
-                <TableCell align="right">{row.carpeta_inv}</TableCell>
-                <TableCell align="right">{row.delitos}</TableCell>
-                <TableCell align="right">{row.estado}</TableCell>
-                <TableCell align="right">{row.estatus}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.llave}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.region}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.unidad}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.no_mandato}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.fecha_oficio}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.nombre_imputado}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.carpeta_inv}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.carpeta_inv}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.delitos}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.estado}</TableCell>
+                <TableCell sx={stylesFila} align="center">{row.estatus}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

@@ -34,6 +34,8 @@ import api from "../../api/api"
 import apiCall from '../../api/apiCall'
 
 function TablaMandamientos({ filtros }) {
+    const stylesHeadCell = {padding:1, fontWeight:'bold', width:'10%', fontSize:'small'}
+
     const checks = useSelector((state) => state.check.checks)
     const checkAll = useSelector((state) => state.checkAll.checks)
     const dispatch = useDispatch()
@@ -254,7 +256,7 @@ function TablaMandamientos({ filtros }) {
                 <Button onClick={enviarBus} variant="contained" size="large">Enviar al Bus</Button>
             </Box> : <Filtros catalogos={filtros} actualizarTablaPorFiltro={actualizarTablaPorFiltro} showCarrito={showCarrito} />}
             <TableContainer component={Paper} align="center">
-                <Table aria-label="custom pagination table" sx={{ minWidth: 440 }} size="small">
+                <Table aria-label="custom pagination table" size="small">
                     <TableHead>
                         <TableRow>
                             {consumeRedux ? <TableCell /> : <>
@@ -273,17 +275,17 @@ function TablaMandamientos({ filtros }) {
                                 <PlaylistRemoveIcon onClick={removeAllChecks} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
                             </TableCell> */}
                             <TableCell><MenuIcon sx={{ fontSize: '21px' }} /></TableCell>
-                            <TableCell>No</TableCell>
-                            <TableCell align="right">Región</TableCell>
-                            <TableCell align="right">Unidad</TableCell>
-                            <TableCell align="right">Proceso</TableCell>
-                            <TableCell align="right">Fecha Proceso</TableCell>
-                            <TableCell align="right">Imputado</TableCell>
-                            <TableCell align="right">Carpeta</TableCell>
-                            <TableCell align="center">Fecha carpeta</TableCell>
-                            <TableCell align="right">Delitos</TableCell>
-                            <TableCell align="right">Estado</TableCell>
-                            <TableCell align="right">Estatus</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">No</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Región</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Unidad</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Proceso</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Fecha Proceso</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Imputado</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Carpeta</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Fecha carpeta</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Delitos</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Estado</TableCell>
+                            <TableCell sx={stylesHeadCell} align="center">Estatus</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
