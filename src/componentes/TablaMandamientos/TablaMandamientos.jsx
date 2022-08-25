@@ -296,41 +296,41 @@ function TablaMandamientos({ filtros }) {
                     <TableFooter><TableRow></TableRow></TableFooter>
                 </Table>
             </TableContainer>
-            <TableContainer>
-                <Table>
-                    <TableFooter>
-                        <TableRow>
-                                <Grid container sx={{mb:3, mt:3}}>
-                                    <Grid item xs={1}></Grid>
-                                    <Grid item xs={6}>
-                                        <TablePagination
-                                            sx={{ justifyContent: "left", display: 'flex' }}
-                                            rowsPerPageOptions={[5, 15, 50, 100]}
-                                            colSpan={3}
-                                            count={mandamientos.data.length}
-                                            rowsPerPage={numeroDeFilasPorPagina}
-                                            labelRowsPerPage={"Filas por Página:"}
-                                            page={pagina}
-                                            SelectProps={{ inputProps: { 'aria-label': 'rows per page' }, native: true }}
-                                            onPageChange={handleChangePage}
-                                            onRowsPerPageChange={handleChangeRowsPerPage}
-                                            ActionsComponent={(subprops) => {
-                                                return <TablaAccionesPaginacion {...subprops}
-                                                    triggerPage={triggerPage}
-                                                    triggerFirstPage={triggerFirstPage}
-                                                    triggerRestore={triggerRestore} />
-                                            }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <BuscadorPagina cambiarPagina={cambiarPagina} />
-                                    </Grid>
-                                    <Grid item xs={1}></Grid>
-                                </Grid>
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
+            <Grid container sx={{ mb: 3, mt: 3 }}>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={6}>
+                    <TableContainer>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TablePagination
+                                        sx={{ justifyContent: "left", display: 'flex' }}
+                                        rowsPerPageOptions={[5, 15, 50, 100]}
+                                        colSpan={3}
+                                        count={mandamientos.data.length}
+                                        rowsPerPage={numeroDeFilasPorPagina}
+                                        labelRowsPerPage={"Filas por Página:"}
+                                        page={pagina}
+                                        SelectProps={{ inputProps: { 'aria-label': 'rows per page' }, native: true }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        ActionsComponent={(subprops) => {
+                                            return <TablaAccionesPaginacion {...subprops}
+                                                triggerPage={triggerPage}
+                                                triggerFirstPage={triggerFirstPage}
+                                                triggerRestore={triggerRestore} />
+                                        }}
+                                    />
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+                <Grid item xs={4}>
+                    <BuscadorPagina cambiarPagina={cambiarPagina} />
+                </Grid>
+                <Grid item xs={1}></Grid>
+            </Grid>
             {consumeRedux ? <></> : <>
                 <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
                 {/* <BuscadorPagina cambiarPagina={cambiarPagina} /> */}
