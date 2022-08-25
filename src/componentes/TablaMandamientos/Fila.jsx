@@ -76,6 +76,7 @@ function Fila({ row, consumeRedux, setMandamientos }) {
                 <TableCell align="right">{row.carpeta_inv}</TableCell>
                 <TableCell align="right">{row.carpeta_inv}</TableCell>
                 <TableCell align="right"></TableCell>
+                <TableCell align="right">{row.estado}</TableCell>
                 <TableCell align="right">{row.estatus}</TableCell>
             </TableRow>
             <TableRow>

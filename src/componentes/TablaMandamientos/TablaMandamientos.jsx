@@ -282,6 +282,7 @@ function TablaMandamientos({ filtros }) {
                             <TableCell align="right">Carpeta</TableCell>
                             <TableCell align="center">Fecha carpeta</TableCell>
                             <TableCell align="right">Delitos</TableCell>
+                            <TableCell align="right">Estado</TableCell>
                             <TableCell align="right">Estatus</TableCell>
                         </TableRow>
                     </TableHead>
