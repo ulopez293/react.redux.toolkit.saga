@@ -330,7 +330,7 @@ function TablaMandamientos({ filtros }) {
                     </TableContainer>
                 </Grid>
                 <Grid item xs={4}>
-                    <BuscadorPagina cambiarPagina={cambiarPagina} />
+                    <BuscadorPagina cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
                 </Grid>
                 <Grid item xs={1}></Grid>
             </Grid>

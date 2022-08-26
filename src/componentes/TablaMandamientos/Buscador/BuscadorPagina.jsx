@@ -6,16 +6,22 @@ import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 
-function BuscadorPagina({ cambiarPagina }) {
+function BuscadorPagina({ cambiarPagina, cantidadPaginas }) {
+
+    const isNumber = (num) => !isNaN(num)
 
     const search = (e) => {
         if (e.key !== 'Enter') return
         e.preventDefault()
+        if (!isNumber(e.target.value)) return
+        if (parseInt(e.target.value) > cantidadPaginas) return
         cambiarPagina(e.target.value)
     }
 
     const handleClick = (e) => {
         let input = e.currentTarget.parentNode.parentNode.querySelector("input")
+        if (!isNumber(input.value)) return
+        if (parseInt(input.value) > cantidadPaginas) return
         cambiarPagina(input.value)
     }
 
