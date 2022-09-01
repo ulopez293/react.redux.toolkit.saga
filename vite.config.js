@@ -6,5 +6,12 @@ export default defineConfig({
   plugins: [
     react(),
     require("vite-plugin-material-ui")
-  ]
+  ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: [
+      "./setupVitest.js"
+    ]
+  }
 })
