@@ -49,7 +49,7 @@ function Fila({ row, consumeRedux, setMandamientos }) {
                 (row.estatus.toUpperCase() == "ENVIADO") ? '#00fe0330' : (row.estatus.toUpperCase() == "PENDIENTE") ? '#f3fe0040' : '#fc058f20'
             }}>
                 <TableCell padding="checkbox" align="center" colSpan={1}>
-                    {row.estatus.toUpperCase() == "AUTORIZADO" || row.estatus.toUpperCase() == "DISPONIBLE" && !consumeRedux ?
+                    {(row.estatus.toUpperCase() == "AUTORIZADO" || row.estatus.toUpperCase() == "DISPONIBLE") && !consumeRedux ?
                         <Checkbox
                             color="primary"
                             checked={checks.some(item => item.id === row.id)}
