@@ -38,6 +38,12 @@ export default function Login() {
         }
     }, [])
 
+    React.useEffect(()=> {
+        setMessageToken('(No generado)')
+        setLoading(false)
+        setIsTokenCreated(null)
+    }, [credentials.login])
+
     React.useEffect(() => {
         if (isTokenCreated == null) return
         (isTokenCreated.estatus) ? setMessageToken('(Generado)') : setMessageToken('(No se pudo generar)')
