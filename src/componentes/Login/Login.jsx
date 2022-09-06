@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme  } from '@mui/material/styles'
+import CircularProgress from '@mui/material/CircularProgress';
 
 import ForgotPassword from './ForgotPassword'
 
@@ -28,6 +29,7 @@ export default function Login() {
     })
     const [isTokenCreated, setIsTokenCreated] = React.useState(null)
     const [messageToken, setMessageToken] = React.useState('(No generado)')
+    const [loading, setLoading] = React.useState(false)
 
     React.useEffect(() => {
         if (auth) {
@@ -39,6 +41,7 @@ export default function Login() {
     React.useEffect(() => {
         if (isTokenCreated == null) return
         (isTokenCreated.estatus) ? setMessageToken('(Generado)') : setMessageToken('(No se pudo generar)')
+        if (isTokenCreated.estatus) setLoading(false)
     }, [isTokenCreated])
 
     const handleSubmit = async (event) => {
@@ -61,6 +64,7 @@ export default function Login() {
 
     const generarTokenBack = async (event) => {
         if (credentials.login.trim() == '') return
+        if (!(isTokenCreated?.estatus)) setLoading(true)
         if (isTokenCreated == null) {
             let data = await callGenericDugrop('get-token', 'POST', { login: credentials.login })
             setIsTokenCreated(data)
@@ -156,6 +160,7 @@ export default function Login() {
                                 // sx={{ mt: 3, mb: 2 }}
                                 sx={{ mt: 3, mb: 2, backgroundColor: 'peru' }}
                             >
+                                {(loading) ? <CircularProgress style={{width:'20px', height:'20px', marginRight:'10px'}} /> : ''}
                                 Ingresar
                             </Button>
                         </Box>
