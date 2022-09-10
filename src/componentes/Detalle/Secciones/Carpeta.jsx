@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-import {catalogoSexo} from '../../../utilidades/catalogoSexo'
+import { catalogoSexo } from '../../../mocks/catalogoSexo'
 
 function Carpeta({ mandamiento }) {
     return (

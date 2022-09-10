@@ -1,4 +1,4 @@
-import { rolesID } from '../../utilidades/rolesID'
+import { rolesID } from '../../mocks/rolesID'
 
 const isUserValidateRol = (id_rol) => {
     if (id_rol == rolesID.ID_ROL_ADMINISTRADORES || id_rol == rolesID.ID_ROL_ENLACE) {
