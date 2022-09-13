@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
-import callGenericDugrop from '../../api/callGenericDugrop'
+import apiCall from '../../api/apiCall'
 
 const style = {
     position: 'absolute',
@@ -28,7 +28,7 @@ export default function ForgotPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let respuesta = await callGenericDugrop('password-email', 'POST', { email: email })
+        let respuesta = await apiCall('POST', 'password-email', 'dugrop' ,{ email: email })
         if (respuesta == null || respuesta == undefined){
             alert("correo no enviado")
             return

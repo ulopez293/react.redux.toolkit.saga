@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { sagaActions } from '../../sagaActions'
 
-import callGenericDugrop from '../../api/callGenericDugrop'
+import apiCall from '../../api/apiCall'
 import isUserValidateRol from './isUserValidateRol'
 
 const theme = createTheme({})
@@ -52,7 +52,7 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        let user = await callGenericDugrop('login', 'POST', credentials)
+        let user = await apiCall('POST', 'login', 'dugrop', credentials)
         if (user.hasOwnProperty('message')) {
             alert(user.message)
             return
@@ -72,12 +72,12 @@ export default function Login() {
         if (credentials.login.trim() == '') return
         if (!(isTokenCreated?.estatus)) setLoading(true)
         if (isTokenCreated == null) {
-            let data = await callGenericDugrop('get-token', 'POST', { login: credentials.login })
+            let data = await apiCall('POST', 'get-token', 'dugrop', { login: credentials.login })
             setIsTokenCreated(data)
             return
         }
         if (isTokenCreated.estatus > 0) return
-        let data = await callGenericDugrop('get-token', 'POST', { login: credentials.login })
+        let data = await apiCall('POST', 'get-token', 'dugrop', { login: credentials.login })
         setIsTokenCreated(data)
     }
 
