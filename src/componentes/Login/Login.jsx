@@ -30,6 +30,7 @@ export default function Login() {
     const [isTokenCreated, setIsTokenCreated] = React.useState(null)
     const [messageToken, setMessageToken] = React.useState('(No generado)')
     const [loading, setLoading] = React.useState(false)
+    const [submitLogin, setSubmitLogin] = React.useState(false)
 
     React.useEffect(() => {
         if (auth) {
@@ -52,9 +53,11 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+        setSubmitLogin(true)
         let user = await apiCall('POST', 'login', 'dugrop', credentials)
         if (user.hasOwnProperty('message')) {
             alert(user.message)
+            setSubmitLogin(false)
             return
         }
         if (!(Object.keys(user).length == 0)) {
@@ -66,6 +69,7 @@ export default function Login() {
                 alert("Rol de usuario no Valido")
             }
         }
+        setSubmitLogin(false)
     }
 
     const generarTokenBack = async (event) => {
@@ -85,6 +89,10 @@ export default function Login() {
         const { name, value } = event.target
         let newValues = { ...credentials, [name]: value }
         setCredentials({ ...newValues })
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Tab') generarTokenBack(e)
     }
 
     return (
@@ -130,6 +138,7 @@ export default function Login() {
                                 variant="filled"
                                 size="small"
                                 onChange={handleChange}
+                                onKeyDown={handleKeyDown}
                             />
                             <TextField
                                 sx={{ mb: 1 }}
@@ -143,6 +152,7 @@ export default function Login() {
                                 variant="filled"
                                 size="small"
                                 onClick={generarTokenBack}
+                                onKeyDown={handleKeyDown}
                                 onChange={handleChange}
                             />
                             <TextField
@@ -157,6 +167,7 @@ export default function Login() {
                                 variant="filled"
                                 size="small"
                                 onClick={generarTokenBack}
+                                onKeyDown={handleKeyDown}
                                 onChange={handleChange}
                             />
                             <Button
@@ -165,8 +176,9 @@ export default function Login() {
                                 variant="contained"
                                 // sx={{ mt: 3, mb: 2 }}
                                 sx={{ mt: 3, mb: 2, backgroundColor: 'peru' }}
+                                disabled={submitLogin ? true : false}
                             >
-                                {(loading) ? <CircularProgress style={{width:'20px', height:'20px', marginRight:'10px'}} /> : ''}
+                                {(loading || submitLogin) ? <CircularProgress style={{width:'20px', height:'20px', marginRight:'10px'}} /> : ''}
                                 Ingresar
                             </Button>
                         </Box>
