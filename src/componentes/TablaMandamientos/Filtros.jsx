@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -86,6 +87,15 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
             <Divider sx={{ mb: 2, mt: 2 }} />
         </>
     )
+}
+
+Filtros.propTypes = {
+    catalogos: PropTypes.shape({
+        catRegiones: PropTypes.array.isRequired,
+        catUnidades: PropTypes.array.isRequired,
+        catFiscales: PropTypes.array.isRequired,
+        catEstatus: PropTypes.array.isRequired,
+    }).isRequired,
 }
 
 export default Filtros
