@@ -100,12 +100,12 @@ export default function NavBar({ filtros }) {
             {ListMenu('left', handleChange, toggleDrawer, auth)}
           </Drawer>
           <Grid container spacing={2}>
-            <Grid item xs={4}>
+            <Grid item xs={5}>
               <img src={logo} width={120} alt="" sx={{ textAlign: 'left' }} />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={4}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1, mt: 2, textAlign: 'left' }}>
-                Sistema de Mandamientos
+                BUS de Mandamientos
               </Typography>
             </Grid>
             <Grid item xs={3}>

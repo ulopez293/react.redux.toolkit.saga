@@ -13,6 +13,7 @@ const checkAllSlice = createSlice({
             if (notExistInState) {
                 state.checks.push(action.payload)
             }
+            console.log(state.checks)
         },
         removeAllChecks(state, action) {
             if (action.payload == undefined) return

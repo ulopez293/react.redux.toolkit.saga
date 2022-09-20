@@ -5,7 +5,7 @@ import Select from '@mui/material/Select'
 import Grid from '@mui/material/Grid'
 import FormControl from '@mui/material/FormControl'
 import Divider from '@mui/material/Divider'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove'
 import Badge from "@mui/material/Badge"
 
 import Buscador from './Buscador/Buscador'
@@ -79,7 +79,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                 </Grid>
                 <Grid item xs={2}>
                     <Badge color="secondary" badgeContent={checks.length} sx={{ mt: 3, cursor: 'pointer' }}>
-                        <ShoppingCartIcon onClick={showCarrito} sx={{ fontSize: 'xx-large' }} />
+                        <DriveFileMoveIcon onClick={showCarrito} sx={{ fontSize: 'xx-large' }} />
                     </Badge>
                 </Grid>
             </Grid>
