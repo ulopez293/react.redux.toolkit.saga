@@ -9,8 +9,6 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
-import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck'
-import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
@@ -68,13 +66,7 @@ function TablaMandamientosVista(props) {
                                         onChange={handleCheckALL}
                                     />
                                 </TableCell>
-                                {/* <TableCell sx={{ backgroundColor: '#00ffa550' }}>
-                                    <PlaylistAddCheckIcon onClick={addAllChecksOfThePage} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
-                                </TableCell> */}
                             </>}
-                            {/* <TableCell sx={{ backgroundColor: '#fc058f50' }}>
-                                <PlaylistRemoveIcon onClick={removeAllChecks} sx={{ cursor: 'pointer', fontSize: 'x-large' }} />
-                            </TableCell> */}
                             <TableCell><MenuIcon sx={{ fontSize: '21px' }} /></TableCell>
                             <TableCell sx={stylesHeadCell} align="center">No</TableCell>
                             <TableCell sx={stylesHeadCell} align="center">Región</TableCell>
@@ -137,10 +129,9 @@ function TablaMandamientosVista(props) {
             </Grid>
             {consumeRedux ? <></> : <>
                 <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
-                {/* <BuscadorPagina cambiarPagina={cambiarPagina} /> */}
                 <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
                     Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas}
-                    {/* | Total de Registros: {numeroRegistros} */}
+                    | Total de Registros: {numeroRegistros}
                 </Typography>
             </>}
         </div>
