@@ -29,9 +29,17 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
     if (catalogos == null) return
 
     const handleChange = (event) => {
-        setBusqueda({ ...defaultValuesBusqueda, [event.target.name]: event.target.value })
         const itResetTable = (!!event.target.value) ? false : true
-        actualizarTablaPorFiltro(event.target.name, event.target.value, itResetTable)
+        let ruta = ''
+        if (itResetTable) setBusqueda({ ...defaultValuesBusqueda, [event.target.name]: event.target.value })
+        if (!itResetTable) {
+            let auxObject = { ...busqueda, [event.target.name]: event.target.value }
+            setBusqueda(auxObject)
+            Object.entries(auxObject).forEach(([key, value]) => {
+                if(auxObject[`${key}`] != '') ruta+= `&${key}=${value}`
+            })
+        }
+        actualizarTablaPorFiltro(ruta, itResetTable)
     }
 
     return (
@@ -53,7 +61,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                         <InputLabel>Unidad</InputLabel>
                         <Select value={busqueda.id_unidad} onChange={handleChange} name="id_unidad">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
-                            {catalogos.catUnidades.map((unidad,idAuxUni) => <MenuItem key={idAuxUni} value={unidad.id}>{unidad.nombre}</MenuItem>)}
+                            {catalogos.catUnidades.map((unidad, idAuxUni) => <MenuItem key={idAuxUni} value={unidad.id}>{unidad.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -62,7 +70,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                         <InputLabel>Fiscal</InputLabel>
                         <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
-                            {catalogos.catFiscales.map((fiscal,idAuxFis) => <MenuItem key={idAuxFis} value={fiscal.id}>{fiscal.nombre}</MenuItem>)}
+                            {catalogos.catFiscales.map((fiscal, idAuxFis) => <MenuItem key={idAuxFis} value={fiscal.id}>{fiscal.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -71,7 +79,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                         <InputLabel>Estatus</InputLabel>
                         <Select value={busqueda.id_estatus} onChange={handleChange} name="id_estatus">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
-                            {catalogos.catEstatus.map((estatus,idAuxEsta) => <MenuItem key={idAuxEsta} value={estatus.id}>{estatus.nombre}</MenuItem>)}
+                            {catalogos.catEstatus.map((estatus, idAuxEsta) => <MenuItem key={idAuxEsta} value={estatus.id}>{estatus.nombre}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </Grid>

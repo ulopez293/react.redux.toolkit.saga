@@ -31,7 +31,7 @@ function TablaMandamientos({ filtros }) {
     const [mandamientos, setMandamientos] = useFetchData("mandamientos")
 
     const [itFilter, setItFilter] = React.useState(false)
-    const [dataFilter, setDataFilter] = React.useState({ nameFilter: '', idFilter: '' })
+    const [dataFilter, setDataFilter] = React.useState('')
 
     const [consumeRedux, setConsumeRedux] = React.useState(false)
 
@@ -97,7 +97,8 @@ function TablaMandamientos({ filtros }) {
     }
 
     const desplegarFilas = () => {
-        return (numeroDeFilasPorPagina > 0
+        return (
+            numeroDeFilasPorPagina > 0
             ? mandamientos.data.slice(pagina * numeroDeFilasPorPagina, pagina * numeroDeFilasPorPagina + numeroDeFilasPorPagina)
             : mandamientos.data
         ).map((row) => (
@@ -109,7 +110,7 @@ function TablaMandamientos({ filtros }) {
         if (itFilter) {
             triggerRestore()
             triggerFirstPage()
-            const rutaFilter = `&${dataFilter.nameFilter}=${dataFilter.idFilter}`
+            const rutaFilter = `${dataFilter}`
             const filtroRegion = (user?.dato_fiscal?.id_region != null) ? `&id_region=${user?.dato_fiscal?.id_region}` : ''
             let datos = await api(`mandamientos?page=${numberPage}${rutaFilter}${filtroRegion}`, "GET")
             setUltimaRutaAPI(`mandamientos?page=${numberPage}${rutaFilter}${filtroRegion}`)
@@ -161,7 +162,7 @@ function TablaMandamientos({ filtros }) {
         setMandamientos(auxDatos)
     }
 
-    const actualizarTablaPorFiltro = async (nombre, id, itResetTable) => {
+    const actualizarTablaPorFiltro = async (ruta, itResetTable) => {
         if (itResetTable) {
             triggerRestore()
             triggerFirstPage()
@@ -170,11 +171,11 @@ function TablaMandamientos({ filtros }) {
             triggerRestore()
             triggerFirstPage()
             const filtroRegion = (user?.dato_fiscal?.id_region != null) ? `&id_region=${user?.dato_fiscal?.id_region}` : ''
-            let datos = await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET")
-            setUltimaRutaAPI(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`)
-            asignarDatosSetMandamientos(await api(`mandamientos?page=1&${nombre}=${id}${filtroRegion}`, "GET"))
+            let datos = await api(`mandamientos?page=1${ruta}${filtroRegion}`, "GET")
+            setUltimaRutaAPI(`mandamientos?page=1${ruta}${filtroRegion}`)
+            asignarDatosSetMandamientos(await api(`mandamientos?page=1${ruta}${filtroRegion}`, "GET"))
             setItFilter(true)
-            setDataFilter({ nameFilter: nombre, idFilter: id })
+            setDataFilter(ruta)
         }
     }
 

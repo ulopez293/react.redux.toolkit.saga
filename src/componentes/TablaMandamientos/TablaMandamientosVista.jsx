@@ -18,6 +18,7 @@ import TablaAccionesPaginacion from "./TablaAccionesPaginacion"
 import Paginas from './Paginas'
 import Filtros from './Filtros'
 import BuscadorPagina from './Buscador/BuscadorPagina'
+import Paginacion from './Paginacion'
 
 
 function TablaMandamientosVista(props) {
@@ -128,6 +129,7 @@ function TablaMandamientosVista(props) {
                 <Grid item xs={1}></Grid>
             </Grid>
             {consumeRedux ? <></> : <>
+                <Paginacion cantidadPaginas={cantidadPaginas} />
                 <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
                 <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
                     Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas}
