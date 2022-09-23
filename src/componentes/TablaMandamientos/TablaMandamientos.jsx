@@ -171,7 +171,7 @@ function TablaMandamientos({ filtros }) {
             triggerRestore()
             triggerFirstPage()
             const filtroRegion = (user?.dato_fiscal?.id_region != null) ? `&id_region=${user?.dato_fiscal?.id_region}` : ''
-            let datos = await api(`mandamientos?page=1${ruta}${filtroRegion}`, "GET")
+            
             setUltimaRutaAPI(`mandamientos?page=1${ruta}${filtroRegion}`)
             asignarDatosSetMandamientos(await api(`mandamientos?page=1${ruta}${filtroRegion}`, "GET"))
             setItFilter(true)
