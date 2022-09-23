@@ -131,11 +131,11 @@ function TablaMandamientosVista(props) {
             </Grid> */}
             {consumeRedux ? <></> : <>
                 <Paginacion cantidadPaginas={cantidadPaginas} cambiarPaginaCallback={cambiarPaginaCallback} />
-                <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
+                {/* <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
                 <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
                     Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas}
                     | Total de Registros: {numeroRegistros}
-                </Typography>
+                </Typography> */}
             </>}
         </div>
     )
