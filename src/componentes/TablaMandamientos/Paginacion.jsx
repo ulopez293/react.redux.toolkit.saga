@@ -2,15 +2,15 @@ import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-export default function Paginacion({ cantidadPaginas }) {
+export default function Paginacion({ cantidadPaginas, cambiarPaginaCallback }) {
     const handleChangePage = (event, value) => {
-        console.log(value)
+        cambiarPaginaCallback(value)
     }
 
     return (
         <Stack spacing={4} sx={{ m: 5, mt: 3 }}>
             <Pagination 
-                count={10000}
+                count={cantidadPaginas}
                 onChange={handleChangePage}
                 size="large"
                 variant="outlined"

@@ -45,6 +45,7 @@ function TablaMandamientosVista(props) {
         triggerFirstPage,
         triggerRestore,
         ultimaRutaAPI,
+        cambiarPaginaCallback
     } = props
     const stylesHeadCell = { padding: 1, fontWeight: 'bold', width: '10%', fontSize: 'small' }
     return (
@@ -93,7 +94,7 @@ function TablaMandamientosVista(props) {
                     <TableFooter><TableRow></TableRow></TableFooter>
                 </Table>
             </TableContainer>
-            <Grid container sx={{ mb: 3, mt: 3 }}>
+            {/* <Grid container sx={{ mb: 3, mt: 3 }}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={6}>
                     <TableContainer>
@@ -102,7 +103,7 @@ function TablaMandamientosVista(props) {
                                 <TableRow>
                                     <TablePagination
                                         sx={{ justifyContent: "left", display: 'flex' }}
-                                        rowsPerPageOptions={[5, 15, 50, 100]}
+                                        rowsPerPageOptions={[5, 15, 50, 100, {label: 'all', value:-1}]}
                                         colSpan={3}
                                         count={mandamientos.data.length}
                                         rowsPerPage={numeroDeFilasPorPagina}
@@ -127,9 +128,9 @@ function TablaMandamientosVista(props) {
                     <BuscadorPagina cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
                 </Grid>
                 <Grid item xs={1}></Grid>
-            </Grid>
+            </Grid> */}
             {consumeRedux ? <></> : <>
-                <Paginacion cantidadPaginas={cantidadPaginas} />
+                <Paginacion cantidadPaginas={cantidadPaginas} cambiarPaginaCallback={cambiarPaginaCallback} />
                 <Paginas cambiarPagina={cambiarPagina} cantidadPaginas={cantidadPaginas} />
                 <Typography variant="subtitle2" gutterBottom component="div" sx={{ m: 3 }}>
                     Pagina Actual: {mandamientos.current_page} | Registros Actuales: {mandamientos.data.length} | Total de Paginas: {cantidadPaginas}

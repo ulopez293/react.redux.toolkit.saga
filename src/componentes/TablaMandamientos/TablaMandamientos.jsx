@@ -98,9 +98,10 @@ function TablaMandamientos({ filtros }) {
 
     const desplegarFilas = () => {
         return (
-            numeroDeFilasPorPagina > 0
-            ? mandamientos.data.slice(pagina * numeroDeFilasPorPagina, pagina * numeroDeFilasPorPagina + numeroDeFilasPorPagina)
-            : mandamientos.data
+            // numeroDeFilasPorPagina > 0
+            // ? mandamientos.data.slice(pagina * numeroDeFilasPorPagina, pagina * numeroDeFilasPorPagina + numeroDeFilasPorPagina)
+            // : mandamientos.data
+            mandamientos.data
         ).map((row) => (
             <Fila key={row.id} row={row} consumeRedux={consumeRedux} setMandamientos={asignarDatosSetMandamientos} />
         ))
@@ -236,6 +237,7 @@ function TablaMandamientos({ filtros }) {
                 handleChangeRowsPerPage={handleChangeRowsPerPage}
                 desplegarFilas={desplegarFilas}
                 cambiarPagina={cambiarPagina}
+                cambiarPaginaCallback={cambiarPaginaCallback}
                 actualizarTablaPorFiltro={actualizarTablaPorFiltro}
                 showCarrito={showCarrito}
                 volverCarrito={volverCarrito}

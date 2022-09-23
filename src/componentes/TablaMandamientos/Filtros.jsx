@@ -66,7 +66,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                     </FormControl>
                 </Grid>
                 <Grid item xs={2}>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120, maxWidth:'100%' }}>
                         <InputLabel>Fiscal</InputLabel>
                         <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
