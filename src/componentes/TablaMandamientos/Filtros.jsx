@@ -19,6 +19,8 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
     const checks = useSelector((state) => state.check.checks)
     const [busqueda, setBusqueda] = useState(defaultValuesBusqueda)
 
+    const styleFiltroSize = { m: 1, minWidth: 120, maxWidth:'100%' }
+
     let user = useSelector((state) => state.login.user)
     useEffect(() => {
         if (user == undefined) {
@@ -48,7 +50,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
             <Grid container>
                 <Grid item xs={2}>
                     {(user?.dato_fiscal?.id_region != null) ? null
-                        : <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                        : <FormControl variant="standard" sx={styleFiltroSize}>
                             <InputLabel>Region</InputLabel>
                             <Select value={busqueda.id_region} onChange={handleChange} name="id_region">
                                 <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
@@ -57,7 +59,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                         </FormControl>}
                 </Grid>
                 <Grid item xs={2}>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <FormControl variant="standard" sx={styleFiltroSize}>
                         <InputLabel>Unidad</InputLabel>
                         <Select value={busqueda.id_unidad} onChange={handleChange} name="id_unidad">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
@@ -66,7 +68,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                     </FormControl>
                 </Grid>
                 <Grid item xs={2}>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120, maxWidth:'100%' }}>
+                    <FormControl variant="standard" sx={styleFiltroSize}>
                         <InputLabel>Fiscal</InputLabel>
                         <Select value={busqueda.id_fiscal} onChange={handleChange} name="id_fiscal">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
@@ -75,7 +77,7 @@ function Filtros({ actualizarTablaPorFiltro, showCarrito, catalogos }) {
                     </FormControl>
                 </Grid>
                 <Grid item xs={2}>
-                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <FormControl variant="standard" sx={styleFiltroSize}>
                         <InputLabel>Estatus</InputLabel>
                         <Select value={busqueda.id_estatus} onChange={handleChange} name="id_estatus">
                             <MenuItem value=""><em>Buscar Filtro:</em></MenuItem>
